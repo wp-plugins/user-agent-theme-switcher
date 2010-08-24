@@ -5,7 +5,7 @@ Plugin URI: http://www.indalcasa.com
 Description: This plugins switch theme for any useragent, specialy for iphone, chrome mobile, opera mobile, etc.
 Author: Juan Benavides Romero
 Author URI: http://www.indalcasa.com
-Version: 1.1.1
+Version: 1.1.2
 */
 class UserAgentThemeSwitcher {
     /**
@@ -148,11 +148,16 @@ class UserAgentThemeSwitcher {
 	}
 
 	if($oldVersion < 4 && $this->version == 4) {
+	    $this->updateBrowsers('Safari Mobile', 'Mozilla\/5.0 \(.*\) AppleWebKit\/.* \(KHTML, like Gecko\) Version\/.* Mobile Safari\/.*');
 	    $this->updateBrowsers('Internet Explorer 6', 'Mozilla\/4\.0 \(compatible; MSIE 6\.0;.*\).*');
 	    $this->updateBrowsers('Internet Explorer 7', 'Mozilla\/4\.0 \(compatible; MSIE 7\.0;.*\).*');
 	    $this->updateBrowsers('Internet Explorer 8', 'Mozilla\/4\.0 \(compatible; MSIE 8\.0;.*\).*');
-	    $this->updateBrowsers('Opera Mini', 'Opera\/.* \(.*\Opera Mini\/.*\).*');
+	    $this->updateBrowsers('Opera Mini', 'Opera\/.* \(.*Opera Mini\/.*\).*');
 	    //update_option('usts_version', 3);
+	}
+
+	if($oldVersion < 5 && $this->version == 5) {
+	    $this->updateBrowsers('Safari Mobile', 'Mozilla\/5.0 \(.*\) AppleWebKit\/.* \(KHTML, like Gecko\) Version\/.* Mobile Safari\/.*');
 	}
 
 

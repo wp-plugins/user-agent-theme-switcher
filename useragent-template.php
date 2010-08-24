@@ -6,25 +6,25 @@
     }
 ?>
 <div class="wrap">
-    <h2>Navegadores</h2>
+    <h2>Browsers</h2>
     <table class="widefat page fixed" width="100%" cellpadding="3" cellspacing="3">
 	<thead>
 	    <tr>
 		<th class="manage-column" scope="col"></th>
-		<th class="manage-column" scope="col">Navegador</th>
-		<th class="manage-column" scope="col">Tema</th>
-		<th class="manage-column" scope="col">Borrar</th>
+		<th class="manage-column" scope="col">Browser</th>
+		<th class="manage-column" scope="col">Theme</th>
+		<th class="manage-column" scope="col">Delete</th>
 	    </tr>
 	</thead>
 	<tbody>
 	    <?php
 		for($i = 0; $i < count($browsers); $i++) {
-		    echo '<tr><td>*</td><td>'.$browsers[$i]->name.'</td><td>'.$browsers[$i]->theme.'</td><td><form method="post" action="'.get_bloginfo('wpurl').'/wp-admin/admin.php?page=useragent-template"><input type="hidden" name="usts_action" value="deletebrowser" /><input type="hidden" name="browser" value="'.$browsers[$i]->id.'" /><input type="submit" value="borrar" class="button bold" /></form></td></tr>';
+		    echo '<tr><td>*</td><td>'.$browsers[$i]->name.'</td><td>'.$browsers[$i]->theme.'</td><td><form method="post" action="'.get_bloginfo('wpurl').'/wp-admin/admin.php?page=useragent-template"><input type="hidden" name="usts_action" value="deletebrowser" /><input type="hidden" name="browser" value="'.$browsers[$i]->id.'" /><input type="submit" value="delete" class="button bold" /></form></td></tr>';
 		}
 	    ?>
 	</tbody>
     </table>
-    <h2>Nuevo navegador</h2>
+    <h2>Sync browser with theme</h2>
     <form method="post" action="<?php echo bloginfo('wpurl'); ?>/wp-admin/admin.php?page=useragent-template">
 	<input type="hidden" name="usts_action" value="addbrowser" />
 	<div class="postbox">
