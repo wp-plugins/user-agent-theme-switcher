@@ -158,6 +158,7 @@ class UserAgentThemeSwitcher {
 
 	if($oldVersion < 5 && $this->version == 5) {
 	    $this->updateBrowsers('Safari Mobile', 'Mozilla\/5.0 \(.*\) AppleWebKit\/.* \(KHTML, like Gecko\) Version\/.* Mobile Safari\/.*');
+	    $this->updateBrowsers('Safari', 'Mozilla\/5\.0 \(.*; .*\) AppleWebKit\/.* \(KHTML, like Gecko\) Version\/[\d\.]+ Safari\/.*');
 	    $this->updateBrowsers('Opera Mini', 'Opera\/.* \(.*Opera Mini\/.*\).*');
 	}
 
