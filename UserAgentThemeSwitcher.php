@@ -306,7 +306,7 @@ class UserAgentThemeSwitcher {
 
 	for($i = 0; $i < count($results); $i++) {
 	    if($results[$i]->regex != '') {
-		if(preg_match('/'.$results[$i]->regex.'/Usi', $userAgent)) {
+		if(@preg_match('/'.$results[$i]->regex.'/Usi', $userAgent)) {
 		    $this->userAgent = $results[$i]->name;
 		    if($results[$i]->theme != '') {
 			$this->theme = $results[$i]->theme;
