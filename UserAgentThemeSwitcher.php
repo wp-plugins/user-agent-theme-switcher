@@ -5,7 +5,7 @@ Plugin URI: http://www.indalcasa.com
 Description: This plugins switch theme for any useragent, specialy for iphone, chrome mobile, opera mobile, etc.
 Author: Juan Benavides Romero
 Author URI: http://www.indalcasa.com
-Version: 1.1.0
+Version: 1.1.1
 */
 class UserAgentThemeSwitcher {
     /**
@@ -36,7 +36,8 @@ class UserAgentThemeSwitcher {
 
     private $userAgent = null;
 
-    private $version = 3;
+    private $version = 4;
+
 
 
     private static $singleton;
@@ -138,12 +139,20 @@ class UserAgentThemeSwitcher {
 	}
 	if($oldVersion < 3) {
 	    $sql .= $this->generateSQLBrowser('Safari Mobile', 'Mozilla\/5.0 \(.*) AppleWebKit\/.* \(KHTML, like Gecko\) Version\/.* Mobile Safari\/.*');
-	    $sql .= $this->generateSQLBrowser('Internet Explorer 6', 'Mozilla\/4\.0 \(compatible; MSIE 6\.0;.*).*');
-	    $sql .= $this->generateSQLBrowser('Internet Explorer 7', 'Mozilla\/4\.0 \(compatible; MSIE 7\.0;.*).*');
-	    $sql .= $this->generateSQLBrowser('Internet Explorer 8', 'Mozilla\/4\.0 \(compatible; MSIE 8\.0;.*).*');
-	    $sql .= $this->generateSQLBrowser('Opera Mini', 'Opera\/.* \(.*\Opera Mini\/.*).*');
+	    $sql .= $this->generateSQLBrowser('Internet Explorer 6', 'Mozilla\/4\.0 \(compatible; MSIE 6\.0;.*\).*');
+	    $sql .= $this->generateSQLBrowser('Internet Explorer 7', 'Mozilla\/4\.0 \(compatible; MSIE 7\.0;.*\).*');
+	    $sql .= $this->generateSQLBrowser('Internet Explorer 8', 'Mozilla\/4\.0 \(compatible; MSIE 8\.0;.*\).*');
+	    $sql .= $this->generateSQLBrowser('Opera Mini', 'Opera\/.* \(.*\Opera Mini\/.*\).*');
 
 	    $updateDB = true;
+	}
+
+	if($oldVersion < 4 && $this->version == 4) {
+	    $this->updateBrowsers('Internet Explorer 6', 'Mozilla\/4\.0 \(compatible; MSIE 6\.0;.*\).*');
+	    $this->updateBrowsers('Internet Explorer 7', 'Mozilla\/4\.0 \(compatible; MSIE 7\.0;.*\).*');
+	    $this->updateBrowsers('Internet Explorer 8', 'Mozilla\/4\.0 \(compatible; MSIE 8\.0;.*\).*');
+	    $this->updateBrowsers('Opera Mini', 'Opera\/.* \(.*\Opera Mini\/.*\).*');
+	    //update_option('usts_version', 3);
 	}
 
 
@@ -151,6 +160,14 @@ class UserAgentThemeSwitcher {
 	    $sql = substr($sql, 0, -1);
 	    $this->dbconnection->get_results($sql);
 	}
+    }
+
+
+    private function updateBrowsers($name, $regex) {
+	$regex = str_replace('\\', '\\\\', $regex);
+	$sql = 'UPDATE `wp_usts_browsers` SET regex = "'.$regex.'" WHERE name = "'.$name.'"';
+	
+	$this->dbconnection->get_results($sql);
     }
 
 

@@ -35,6 +35,9 @@ Now the cache is not supported but will work so that if it is supported in the f
 
 == Changelog ==
 
+= 1.1.1 =
+* Fix problem with regex in IE and Opera mini and not supported browsers
+
 = 1.1 =
 * Added more browsers supports and plugins screencaps for plugin directory
 * Browser added:
