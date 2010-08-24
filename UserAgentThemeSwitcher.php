@@ -5,7 +5,7 @@ Plugin URI: http://www.indalcasa.com
 Description: This plugins switch theme for any useragent, specialy for iphone, chrome mobile, opera mobile, etc.
 Author: Juan Benavides Romero
 Author URI: http://www.indalcasa.com
-Version: 1.0.0
+Version: 1.1.0
 */
 class UserAgentThemeSwitcher {
     /**
@@ -36,7 +36,7 @@ class UserAgentThemeSwitcher {
 
     private $userAgent = null;
 
-    private $version = 2;
+    private $version = 3;
 
 
     private static $singleton;
@@ -128,14 +128,24 @@ class UserAgentThemeSwitcher {
 	$sql = 'INSERT INTO `wp_usts_browsers` (`name`, `icon`, `theme`, `regex`) VALUES ';
 
 	if($oldVersion < 1) {
-	    $sql .= '("Google Chrome", NULL, NULL, "Mozilla\\\\/5.0 \\(.*\\) AppleWebKit\\\\/.* \\\\(KHTML, like Gecko\\\\) Chrome\\\\/.* Safari\\\\/.*"),';
+	    $sql .= '("Google Chrome", NULL, NULL, "Mozilla\\\\/5\.0 \\(.*\\) AppleWebKit\\\\/.* \\\\(KHTML, like Gecko\\\\) Chrome\\\\/.* Safari\\\\/.*"),';
 	    $updateDB = true;
 	}
 	if($oldVersion < 2) {
-	    $sql .= $this->generateSQLBrowser('Safari', 'Mozilla\/5.0 \(.*; .*\) AppleWebKit\/.* \(KHTML, like Gecko\) Version\/.* Safari\/.*');
-	    $sql .= $this->generateSQLBrowser('Firefox', 'Mozilla\/5.0 \(.*\) Gecko\/.* Firefox\/.*');
+	    $sql .= $this->generateSQLBrowser('Safari', 'Mozilla\/5\.0 \(.*; .*\) AppleWebKit\/.* \(KHTML, like Gecko\) Version\/.* Safari\/.*');
+	    $sql .= $this->generateSQLBrowser('Firefox', 'Mozilla\/5\.0 \(.*\) Gecko\/.* Firefox\/.*');
 	    $updateDB = true;
 	}
+	if($oldVersion < 3) {
+	    $sql .= $this->generateSQLBrowser('Safari Mobile', 'Mozilla\/5.0 \(.*) AppleWebKit\/.* \(KHTML, like Gecko\) Version\/.* Mobile Safari\/.*');
+	    $sql .= $this->generateSQLBrowser('Internet Explorer 6', 'Mozilla\/4\.0 \(compatible; MSIE 6\.0;.*).*');
+	    $sql .= $this->generateSQLBrowser('Internet Explorer 7', 'Mozilla\/4\.0 \(compatible; MSIE 7\.0;.*).*');
+	    $sql .= $this->generateSQLBrowser('Internet Explorer 8', 'Mozilla\/4\.0 \(compatible; MSIE 8\.0;.*).*');
+	    $sql .= $this->generateSQLBrowser('Opera Mini', 'Opera\/.* \(.*\Opera Mini\/.*).*');
+
+	    $updateDB = true;
+	}
+
 
 	if($updateDB === true) {
 	    $sql = substr($sql, 0, -1);
@@ -315,152 +325,4 @@ class UserAgentThemeSwitcher {
 $wpUserAgentThemeSwitcher = new UserAgentThemeSwitcher();
 $wpUserAgentThemeSwitcher->initialize();
 unset($wpUserAgentThemeSwitcher);
-
-
-
-
-class ThemeSwitcher {
-
-	function ThemeSwitcher()
-	{
-		add_action('init', array(&$this, 'set_theme_cookie'));
-		add_action('widgets_init', array(&$this, 'event_widgets_init'));
-
-		add_filter('stylesheet', array(&$this, 'get_stylesheet'));
-		add_filter('template', array(&$this, 'get_template'));
-	}
-
-	function event_widgets_init()
-	{
-		register_widget('ThemeSwitcherWidget');
-	}
-
-	function get_stylesheet($stylesheet = '') {
-		$theme = $this->get_theme();
-
-		if (empty($theme)) {
-			return $stylesheet;
-		}
-
-		$theme = get_theme($theme);
-
-		// Don't let people peek at unpublished themes.
-		if (isset($theme['Status']) && $theme['Status'] != 'publish')
-			return $template;
-
-		if (empty($theme)) {
-			return $stylesheet;
-		}
-
-		return $theme['Stylesheet'];
-	}
-
-	function get_template($template) {
-		$theme = $this->get_theme();
-
-		if (empty($theme)) {
-			return $template;
-		}
-
-		$theme = get_theme($theme);
-
-		if ( empty( $theme ) ) {
-			return $template;
-		}
-
-		// Don't let people peek at unpublished themes.
-		if (isset($theme['Status']) && $theme['Status'] != 'publish')
-			return $template;
-
-		return $theme['Template'];
-	}
-
-	function get_theme() {
-		if ( ! empty($_COOKIE["wptheme" . COOKIEHASH] ) ) {
-			return $_COOKIE["wptheme" . COOKIEHASH];
-		} else {
-			return '';
-		}
-	}
-
-	function set_theme_cookie() {
-		load_plugin_textdomain('theme-switcher');
-		$expire = time() + 30000000;
-		if ( ! empty($_GET["wptheme"] ) ) {
-			setcookie(
-				"wptheme" . COOKIEHASH,
-				stripslashes($_GET["wptheme"]),
-				$expire,
-				COOKIEPATH
-			);
-			$redirect = remove_query_arg('wptheme');
-			wp_redirect($redirect);
-			exit;
-		}
-	}
-
-	function theme_switcher_markup($style = "text", $instance = array()) {
-		if ( ! $theme_data = wp_cache_get('themes-data', 'theme-switcher') ) {
-			$themes = (array) get_themes();
-			if ( function_exists('is_site_admin') ) {
-				$allowed_themes = (array) get_site_option( 'allowedthemes' );
-				foreach( $themes as $key => $theme ) {
-				    if( isset( $allowed_themes[ wp_specialchars( $theme[ 'Stylesheet' ] ) ] ) == false ) {
-						unset( $themes[ $key ] );
-				    }
-				}
-			}
-
-			$default_theme = get_current_theme();
-
-			$theme_data = array();
-			foreach ((array) $themes as $theme_name => $data) {
-				// Skip unpublished themes.
-				if (empty($theme_name) || isset($themes[$theme_name]['Status']) && $themes[$theme_name]['Status'] != 'publish')
-					continue;
-				$theme_data[add_query_arg('wptheme', $theme_name, get_option('home'))] = $theme_name;
-			}
-
-			asort($theme_data);
-
-			wp_cache_set('themes-data', $theme_data, 'theme-switcher');
-		}
-
-		$ts = '<ul id="themeswitcher">'."\n";
-
-		if ( $style == 'dropdown' ) {
-			$ts .= '<li>' . "\n\t" . '<select name="themeswitcher" onchange="location.href=this.options[this.selectedIndex].value;">'."\n";
-		}
-
-		foreach ($theme_data as $url => $theme_name) {
-			if (
-				! empty($_COOKIE["wptheme" . COOKIEHASH]) && $_COOKIE["wptheme" . COOKIEHASH] == $theme_name ||
-				empty($_COOKIE["wptheme" . COOKIEHASH]) && ($theme_name == $default_theme)
-			) {
-				$pattern = 'dropdown' == $style ? '<option value="%1$s" selected="selected">%2$s</option>' : '<li>%2$s</li>';
-			} else {
-				$pattern = 'dropdown' == $style ? '<option value="%1$s">%2$s</option>' : '<li><a href="%1$s">%2$s</a></li>';
-			}
-			$ts .= sprintf($pattern,
-				esc_attr($url),
-				esc_html($theme_name)
-			);
-
-		}
-
-		if ( 'dropdown' == $style ) {
-			$ts .= "</select>\n</li>\n";
-		}
-		$ts .= '</ul>';
-		return $ts;
-	}
-}
-
-/*$theme_switcher = new ThemeSwitcher();
-
-function wp_theme_switcher($type = '')
-{
-	global $theme_switcher;
-	echo $theme_switcher->theme_switcher_markup($type);
-}*/
 ?>
