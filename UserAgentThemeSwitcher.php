@@ -5,7 +5,7 @@ Plugin URI: http://www.indalcasa.com
 Description: This plugins switch theme for any useragent, specialy for iphone, chrome mobile, opera mobile, etc.
 Author: Juan Benavides Romero
 Author URI: http://www.indalcasa.com
-Version: 1.1.2
+Version: 1.1.3
 */
 class UserAgentThemeSwitcher {
     /**
@@ -36,7 +36,7 @@ class UserAgentThemeSwitcher {
 
     private $userAgent = null;
 
-    private $version = 4;
+    private $version = 5;
 
 
 
