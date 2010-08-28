@@ -93,12 +93,18 @@
 	<thead>
 	    <tr>
 		<th class="manage-column" scope="col">UserAgent</th>
+		<th class="manage-column" scope="col" width="75"></th>
+		<th class="manage-column" scope="col" width="75"></th>
 	    </tr>
 	</thead>
 	<tbody>
 	    <?php
 		for($i = 0; $i < count($useragents); $i++) {
-		    echo '<tr><td>'.$useragents[$i]->useragent.'</td></tr>';
+		    echo '<tr>';
+		    echo '<td>'.$useragents[$i]->useragent.'</td>';
+		    echo '<td><a href="'.get_bloginfo('wpurl').'/wp-admin/admin.php?page=useragent-template&usts_action=report_useragent&useragent='.$useragents[$i]->useragent.'">report</a></td>';
+		    echo '<td><a href="'.get_bloginfo('wpurl').'/wp-admin/admin.php?page=useragent-template&usts_action=delete_useragent&useragent='.$useragents[$i]->id.'">delete</a></td>';
+		    echo '</tr>';
 		}
 	    ?>
 	</tbody>

@@ -35,6 +35,11 @@ Now the cache is not supported but will work so that if it is supported in the f
 
 == Changelog ==
 
+= 1.2.0 =
+* Updated Safari Mobile pattern to add support for iphone
+* If uses debug mode, you can delete unsoported useragents for list
+* If uses debug mode, you can report unsoported useragents for we add suport in future
+
 = 1.1.3 =
 * Fix problem over Safari and Safari Mobile
 

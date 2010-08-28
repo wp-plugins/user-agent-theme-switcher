@@ -5,7 +5,7 @@ Plugin URI: http://www.indalcasa.com
 Description: This plugins switch theme for any useragent, specialy for iphone, chrome mobile, opera mobile, etc.
 Author: Juan Benavides Romero
 Author URI: http://www.indalcasa.com
-Version: 1.1.3
+Version: 1.2.0
 */
 class UserAgentThemeSwitcher {
     /**
@@ -36,7 +36,7 @@ class UserAgentThemeSwitcher {
 
     private $userAgent = null;
 
-    private $version = 5;
+    private $version = 6;
 
 
 
@@ -162,6 +162,10 @@ class UserAgentThemeSwitcher {
 	    $this->updateBrowsers('Opera Mini', 'Opera\/.* \(.*Opera Mini\/.*\).*');
 	}
 
+	if($oldVersion < 6) {
+	    $sql .= $this->updateBrowsers('Safari Mobile', 'Mozilla\/5.0 \(.*\) AppleWebKit\/.* \(KHTML, like Gecko\) Version\/.* Mobile[\/A-Z0-9]{0,} Safari\/.*');
+	}
+
 
 	if($updateDB === true) {
 	    $sql = substr($sql, 0, -1);
@@ -221,6 +225,12 @@ class UserAgentThemeSwitcher {
     }
 
 
+    private function deleteUserAgent($id) {
+	$sql = 'DELETE FROM `'.$this->tablePrefix.'usts_useragents` WHERE id = '.$id;
+	$this->dbconnection->get_results($sql);
+    }
+
+
     public function processShowUserAgent() {
 	$usts_action = $this->getParameter('usts_action');
 
@@ -244,6 +254,16 @@ class UserAgentThemeSwitcher {
 		$this->deleteBrowser($this->getParameter('browser'));
 	    } elseif($usts_action == 'truncateua') {
 		$this->truncateUserAgents();
+	    } elseif($usts_action == 'regextest') {
+		if(@preg_match('/'.$this->getParameter('uats_pattern').'/Usi', $this->getParameter('uats_text'))) {
+		    $patternResult = 'true';
+		} else {
+		    $patternResult = 'false';
+		}
+	    } elseif($usts_action == 'delete_useragent') {
+		$this->deleteUserAgent($this->getParameter('useragent'));
+	    } elseif($usts_action == 'report_useragent') {
+		mail('jbalde@gmail.com', 'UserAgent report', $this->getParameter('useragent'));
 	    }
 	}
 
@@ -345,6 +365,7 @@ class UserAgentThemeSwitcher {
 	}
     }//getParameter
 }//WpMch
+
 
 $wpUserAgentThemeSwitcher = new UserAgentThemeSwitcher();
 $wpUserAgentThemeSwitcher->initialize();
