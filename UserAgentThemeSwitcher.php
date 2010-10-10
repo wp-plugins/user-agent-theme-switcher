@@ -2,69 +2,141 @@
 /*
 Plugin Name: UserAgent theme switcher
 Plugin URI: http://www.indalcasa.com
-Description: This plugins switch theme for any useragent, specialy for iphone, chrome mobile, opera mobile, etc.
+Description: This plugins switch theme for any useragent, specialy for iphone, chrome mobile, opera mobile, etc. or in a groups of browser same "mobile" or IE to add this template at all browser of this category
 Author: Juan Benavides Romero
 Author URI: http://www.indalcasa.com
-Version: 1.2.0
+Version: 2.0.0
 */
+
+
+/**
+ * UserAgent Theme Switcher class to process the plugin
+ * @author Juan Benavides Romero <juan.benavides.romero@gmail.com>
+ */
 class UserAgentThemeSwitcher {
     /**
-     * Ruta base del plugin
-     * @var string
+     * Replaced theme for the browser
+     * @var array
      */
-    private $pluginPath;
+    private $theme = null;
+
+
     /**
-     * Estructura de directorios del plugin
+     * Detected useragent
+     * @var BrowserUA
+     */
+    private $userAgent = null;
+  
+
+    /**
+     * Database helper
+     * @var UserAgentThemeSwitcherData
+     */
+    private $database;
+
+    
+    /**
+     * Internal server path
      * @var string
      */
     private $path;
+
+
     /**
-     * Carpeta donde se encuentran alojados los templates del plugin
+     * Plugin compilation version to add news database features
+     * @var int
+     */
+    private $version = 200;
+
+
+    /**
+     * Url to blog
      * @var string
      */
-    private $templatePath = 'template';
+    private $blogUrl;
+
+
     /**
-     * Objeto de conexion a la base de datos
-     * @var wpdb
+     * Constant action to delete a rule
      */
-    private $dbconnection;
-
-
-    private $tablePrefix;
-
-    private $theme = null;
-
-    private $userAgent = null;
-
-    private $version = 6;
-
-
-
-    private static $singleton;
-
-
-
-    public function __construct() {
-	UserAgentThemeSwitcher::$singleton = $this;
-    }
+    const ACTION_DELETERULE = 'deleterule';
 
 
     /**
-     * Metodo que inicializa toda la configuracion del plugin
+     * Constant action to sync a browser with a theme
+     */
+    const ACTION_SYNCBROWSER = 'syncbrowser';
+
+
+    /**
+     * Constant action to sync a tag with a theme
+     */
+    const ACTION_SYNCTAG = 'synctag';
+
+
+    /**
+     * Constant action to update debug mode
+     */
+    const ACTION_DEBUG = 'updatedebug';
+
+
+    /**
+     * Constant action to report a unsoported useragent
+     */
+    const ACTION_REPORTUSERAGENT = 'reportuseragent';
+
+
+    /**
+     * Constant action to delete a unsoported useragent
+     */
+    const ACTION_DELETEUSERAGENT = 'deleteuseragent';
+
+
+    /**
+     * Constant action to truncate all debug useragent
+     */
+    const ACTION_TRUNCATEDEBUGUSERAGENT = 'truncatedebuguseragent';
+
+
+    /**
+     * Constant page template manager
+     */
+    const PAGE_TEMPLATE = 'useragent-template';
+
+
+    /**
+     * Constant page debug manager
+     */
+    const PAGE_DEBUG = 'useragent-debug';
+    
+
+    /**
+     * Default constructor. Include the files to works
+     */
+    public function __construct() {
+	include('BrowserUA.php');
+	include('UserAgentThemeSwitcherData.php');
+    }//__construct
+
+
+    /**
+     * Initialize the UserAgent Theme Switcher plugin
+     * @global wpdb $wpdb Wordpress database connection
+     * @global string $table_prefix Database table prefix
      */
     public function initialize() {
-	ini_set('display_errors', 'true');
-	$this->pluginPath = basename(dirname(__FILE__));
-	$this->path = dirname(__FILE__).'/';
 	global $wpdb;
 	global $table_prefix;
-	$this->dbconnection = $wpdb;
-	$this->tablePrefix = $table_prefix;
-	$this->checkDataBase();
+	
+	$this->database = new UserAgentThemeSwitcherData($wpdb, $table_prefix);
+	$this->path = dirname(__FILE__);
+	$this->blogUrl = get_bloginfo('wpurl');
 
+	$this->database->updateDatabase($this->version);
+
+	$this->processAction();
 	$this->parseBrowser();
-
-	load_plugin_textdomain('Theme Switcher','wp-content/plugins/'.$this->pluginPath, $this->pluginPath);
+	//load_plugin_textdomain('useragenthemeswitcher', false, $this->path);
 
 	add_action('admin_menu', array($this, 'createMenu'));
 	add_action('init', array($this, 'pageProcess'));
@@ -73,231 +145,102 @@ class UserAgentThemeSwitcher {
     }//initialize
 
 
+    /**
+     * Process the actions for the admin menu
+     */
+    private function processAction() {
+	$page = $this->getParameter('page');
+	$action = $this->getParameter('action');
+
+	if($page == UserAgentThemeSwitcher::PAGE_TEMPLATE) {
+	    if($action == UserAgentThemeSwitcher::ACTION_DELETERULE) {
+		$this->database->deleteRule($this->getParameter('code'));
+	    } else if($action == UserAgentThemeSwitcher::ACTION_SYNCBROWSER) {
+		$this->database->addRule($this->getParameter('browser'), $this->getParameter('theme'));
+	    } else if($action == UserAgentThemeSwitcher::ACTION_SYNCTAG) {
+		$this->database->addRule($this->getParameter('tag'), $this->getParameter('theme'));
+	    }
+	} else if($page == UserAgentThemeSwitcher::PAGE_DEBUG) {
+	    if($action == UserAgentThemeSwitcher::ACTION_DEBUG) {
+		if($this->getParameter('debug') == null) {
+		    update_option(UserAgentThemeSwitcherData::DEBUG_KEY, "false");
+		} else {
+		    update_option(UserAgentThemeSwitcherData::DEBUG_KEY, "true");
+		}
+	    } else if($action == UserAgentThemeSwitcher::ACTION_REPORTUSERAGENT) {
+		mail('juan.benavides.romero@gmail.com', 'Unsoported useragent report', $this->getParameter('useragent'));
+	    } else if($action == UserAgentThemeSwitcher::ACTION_DELETEUSERAGENT) {
+		$this->database->deleteUserAgent($this->getParameter('useragent'));
+	    } else if($action == UserAgentThemeSwitcher::ACTION_TRUNCATEDEBUGUSERAGENT) {
+		$this->database->truncateDebugUserAgents();
+	    }
+	}
+    }//processAction
 
 
-
+    /**
+     * Create the admin menu structure
+     */
     public function createMenu() {
-	add_menu_page('Theme Switcher', 'Theme Switcher', 'manage_options', 'useragent-template', array($this, 'processShowUserAgent'), null);
+	add_menu_page('Theme Switcher', 'Theme Switcher', 'manage_options', UserAgentThemeSwitcher::PAGE_TEMPLATE, array($this, 'processUserAgentTemplate'), null);
+	add_submenu_page(UserAgentThemeSwitcher::PAGE_TEMPLATE, 'Cache', 'cache options', 'manage_options', 'useragent-cache', array($this, 'processUserAgentCache'), null);
+	add_submenu_page(UserAgentThemeSwitcher::PAGE_TEMPLATE, 'Unsoported user agents', 'debuged useragents', 'manage_options', 'useragent-debug', array($this, 'processUserAgentDebug'), null);
     }//createMenu
 
 
-
-
-
-    private function checkDataBase() {
-	$installedVersion = get_option('usts_version');
-
-	if($installedVersion == null) {
-	    $isConfigurated = false;
-
-	    $tables = $this->dbconnection->get_results("show tables");
-	    foreach ($tables as $table) {
-		foreach ($table as $value) {
-		    if ($value == $this->tablePrefix.'_usts_useragents') {
-			$isConfigurated = true;
-		    }
-		}
-	    }
-
-	    if($isConfigurated === false) {
-		$sql = 'CREATE TABLE IF NOT EXISTS '.$this->tablePrefix.'usts_useragents (`id` INT NOT NULL AUTO_INCREMENT, `useragent` VARCHAR( 255 ) NOT NULL, `browserId` INT NULL, PRIMARY KEY (  `id` )) ENGINE = MYISAM;';
-		$this->dbconnection->get_results($sql);
-		$sql = 'CREATE TABLE IF NOT EXISTS `'.$this->tablePrefix.'usts_browsers` (  `id` int(11) NOT NULL AUTO_INCREMENT,  `name` varchar(50) NOT NULL,  `icon` varchar(50) DEFAULT NULL,  `theme` varchar(50) DEFAULT NULL,  `regex` varchar(255) DEFAULT NULL,  PRIMARY KEY (`id`),  KEY `name` (`name`)) ENGINE=MyISAM;';
-		$this->dbconnection->get_results($sql);
-
-		add_option('usts_debug', 'false');
-	    }
-
-	    add_option('usts_version', $this->version);
-
-	    $installedVersion = 0;
-	}
-
-	if($installedVersion != $this->version) {
-	    $this->generateBrowsers($installedVersion);
-
-	    update_option('usts_version', $this->version);
-	}
-
-
-    }//checkDataBase
-
-
-
-    private function generateBrowsers($oldVersion) {
-	$updateDB = false;
-	$sql = 'INSERT INTO `wp_usts_browsers` (`name`, `icon`, `theme`, `regex`) VALUES ';
-
-	if($oldVersion < 1) {
-	    $sql .= '("Google Chrome", NULL, NULL, "Mozilla\\\\/5\.0 \\(.*\\) AppleWebKit\\\\/.* \\\\(KHTML, like Gecko\\\\) Chrome\\\\/.* Safari\\\\/.*"),';
-	    $updateDB = true;
-	}
-	if($oldVersion < 2) {
-	    $sql .= $this->generateSQLBrowser('Safari', 'Mozilla\/5\.0 \(.*; .*\) AppleWebKit\/.* \(KHTML, like Gecko\) Version\/.* Safari\/.*');
-	    $sql .= $this->generateSQLBrowser('Firefox', 'Mozilla\/5\.0 \(.*\) Gecko\/.* Firefox\/.*');
-	    $updateDB = true;
-	}
-	if($oldVersion < 3) {
-	    $sql .= $this->generateSQLBrowser('Safari Mobile', 'Mozilla\/5.0 \(.*) AppleWebKit\/.* \(KHTML, like Gecko\) Version\/.* Mobile Safari\/.*');
-	    $sql .= $this->generateSQLBrowser('Internet Explorer 6', 'Mozilla\/4\.0 \(compatible; MSIE 6\.0;.*\).*');
-	    $sql .= $this->generateSQLBrowser('Internet Explorer 7', 'Mozilla\/4\.0 \(compatible; MSIE 7\.0;.*\).*');
-	    $sql .= $this->generateSQLBrowser('Internet Explorer 8', 'Mozilla\/4\.0 \(compatible; MSIE 8\.0;.*\).*');
-	    $sql .= $this->generateSQLBrowser('Opera Mini', 'Opera\/.* \(.*\Opera Mini\/.*\).*');
-
-	    $updateDB = true;
-	}
-
-	if($oldVersion < 4 && $this->version == 4) {
-	    $this->updateBrowsers('Safari Mobile', 'Mozilla\/5.0 \(.*\) AppleWebKit\/.* \(KHTML, like Gecko\) Version\/.* Mobile Safari\/.*');
-	    $this->updateBrowsers('Internet Explorer 6', 'Mozilla\/4\.0 \(compatible; MSIE 6\.0;.*\).*');
-	    $this->updateBrowsers('Internet Explorer 7', 'Mozilla\/4\.0 \(compatible; MSIE 7\.0;.*\).*');
-	    $this->updateBrowsers('Internet Explorer 8', 'Mozilla\/4\.0 \(compatible; MSIE 8\.0;.*\).*');
-	    $this->updateBrowsers('Opera Mini', 'Opera\/.* \(.*Opera Mini\/.*\).*');
-	    //update_option('usts_version', 3);
-	}
-
-	if($oldVersion < 5 && $this->version == 5) {
-	    $this->updateBrowsers('Safari Mobile', 'Mozilla\/5.0 \(.*\) AppleWebKit\/.* \(KHTML, like Gecko\) Version\/.* Mobile Safari\/.*');
-	    $this->updateBrowsers('Safari', 'Mozilla\/5\.0 \(.*; .*\) AppleWebKit\/.* \(KHTML, like Gecko\) Version\/[\d\.]+ Safari\/.*');
-	    $this->updateBrowsers('Opera Mini', 'Opera\/.* \(.*Opera Mini\/.*\).*');
-	}
-
-	if($oldVersion < 6) {
-	    $sql .= $this->updateBrowsers('Safari Mobile', 'Mozilla\/5.0 \(.*\) AppleWebKit\/.* \(KHTML, like Gecko\) Version\/.* Mobile[\/A-Z0-9]{0,} Safari\/.*');
-	}
-
-
-	if($updateDB === true) {
-	    $sql = substr($sql, 0, -1);
-	    $this->dbconnection->get_results($sql);
-	}
-    }
-
-
-    private function updateBrowsers($name, $regex) {
-	$regex = str_replace('\\', '\\\\', $regex);
-	$sql = 'UPDATE `wp_usts_browsers` SET regex = "'.$regex.'" WHERE name = "'.$name.'"';
-	
-	$this->dbconnection->get_results($sql);
-    }
-
-
-    private function generateSQLBrowser($name, $regex) {
-	$regex = str_replace('\\', '\\\\', $regex);
-
-	$sql = '("'.$name.'", NULL, NULL, "'.$regex.'"),';
-
-	return $sql;
-    }
-
-
-
-    private function addTemplateToBrowser($browser, $theme) {
-	$sql = 'UPDATE '.$this->tablePrefix.'usts_browsers SET theme = "'.$theme.'" WHERE id = '.$browser;
-	$this->dbconnection->get_results($sql);
-    }
-
-
-
-    private function getBrowsers() {
-	$sql = 'SELECT * FROM '.$this->tablePrefix.'usts_browsers';
-	$results = $this->dbconnection->get_results($sql);
-
-	return $results;
-    }
-
-
-    private function deleteBrowser($browser) {
-	$sql = 'UPDATE '.$this->tablePrefix.'usts_browsers SET theme = NULL WHERE id = '.$browser;
-	$this->dbconnection->get_results($sql);
-    }
-
-
-    private function getUserAgents() {
-	$sql = 'SELECT * FROM '.$this->tablePrefix.'usts_useragents';
-	return $this->dbconnection->get_results($sql);
-    }
-
-
-    private function truncateUserAgents() {
-	$sql = 'TRUNCATE TABLE `'.$this->tablePrefix.'usts_useragents`';
-	$this->dbconnection->get_results($sql);
-    }
-
-
-    private function deleteUserAgent($id) {
-	$sql = 'DELETE FROM `'.$this->tablePrefix.'usts_useragents` WHERE id = '.$id;
-	$this->dbconnection->get_results($sql);
-    }
-
-
-    public function processShowUserAgent() {
-	$usts_action = $this->getParameter('usts_action');
-
-	if($usts_action != null) {
-	    if($usts_action == 'addbrowser') {
-		$uats_browser = $this->getParameter('uats_browser');
-		$uats_theme = $this->getParameter('uats_theme');
-
-		$this->addTemplateToBrowser($uats_browser, $uats_theme);
-	    } elseif($usts_action == 'updatedebug') {
-		$debug = $this->getParameter('uats_debug');
-
-		if($debug == null) {
-		    $debug = 'false';
-		} else {
-		    $debug = 'true';
-		}
-
-		update_option('usts_debug', $debug);
-	    } elseif($usts_action == 'deletebrowser') {
-		$this->deleteBrowser($this->getParameter('browser'));
-	    } elseif($usts_action == 'truncateua') {
-		$this->truncateUserAgents();
-	    } elseif($usts_action == 'regextest') {
-		if(@preg_match('/'.$this->getParameter('uats_pattern').'/Usi', $this->getParameter('uats_text'))) {
-		    $patternResult = 'true';
-		} else {
-		    $patternResult = 'false';
-		}
-	    } elseif($usts_action == 'delete_useragent') {
-		$this->deleteUserAgent($this->getParameter('useragent'));
-	    } elseif($usts_action == 'report_useragent') {
-		mail('jbalde@gmail.com', 'UserAgent report', $this->getParameter('useragent'));
-	    }
-	}
-
-	$useragents = null;
-	if(get_option('usts_debug') == 'true') {
-	    $useragents = $this->getUserAgents();
-	}
-	$browsers = $this->getBrowsers();
+    /**
+     * Load the administrator page for set a theme by browser
+     */
+    public function processUserAgentTemplate() {
+	$browsersWithoutTheme = $this->database->getBrowsersWithoutTheme();
+	$browsersWithTheme = $this->database->getBrowsersWithTheme();
+	$rules = $this->database->getConfiguratedTemplates();
 	$themes = get_themes();
-	$debug = get_option('usts_debug');
-	include('useragent-template.php');
-    }
+	$tags = $this->database->getTags();
+
+	include('template/'.UserAgentThemeSwitcher::PAGE_TEMPLATE.'.php');
+    }//processUserAgentTemplate
 
 
+    /**
+     * Load the administrator page for set the cache options
+     */
+    public function processUserAgentCache() {
+	include('template/useragent-cache.php');
+    }//processUserAgentCache
 
+
+    /**
+     * Load the administrator page for debug options
+     */
+    public function processUserAgentDebug() {
+	$isDebug = get_option(UserAgentThemeSwitcherData::DEBUG_KEY);
+	$useragents = $this->database->getDebugUserAgents();
+
+	//print_r($useragents); die;
+
+	include('template/useragent-debug.php');
+    }//processUserAgentDebug
+
+
+    /**
+     * Process a page load to register a new unsporoted useragent if the debug mode is active
+     */
     public function pageProcess() {
-	$debugmode = get_option('usts_debug');
+	$debugmode = get_option(UserAgentThemeSwitcherData::DEBUG_KEY);
 
 	if($debugmode == 'true' && $this->userAgent == null) {
 	    $useragent = $_SERVER['HTTP_USER_AGENT'];
-
-	    $sql = 'SELECT id FROM '.$this->tablePrefix.'usts_useragents where useragent = "'.$useragent.'"';
-	    $exists = $this->dbconnection->get_results($sql);
-
-	    if($exists == null) {
-		$sql = 'INSERT INTO '.$this->tablePrefix.'usts_useragents (useragent) VALUES ("'.$useragent.'")';
-		$this->dbconnection->get_results($sql);
-	    }
+	    $this->database->addDebugUserAgent($useragent);
 	}
-    }
+    }//pageProcess
 
 
-
-
+    /**
+     * Switch a template dinamicly
+     * @param string $template Template name
+     * @return Template name
+     */
     public function switchTemplate($template) {
 	if($this->theme != null) {
 	    $theme = get_theme($this->theme);
@@ -306,11 +249,14 @@ class UserAgentThemeSwitcher {
 	}
 
 	return $theme['Template'];
-    }
+    }//switchTemplate
 
 
-
-
+    /**
+     * Switch a stylesheet dinamicly
+     * @param string $stylesheet Stylesheet name
+     * @return string
+     */
     public function switchStylesheet($stylesheet = '') {
 	if($this->theme != null) {
 	    $theme = get_theme($this->theme);
@@ -319,39 +265,39 @@ class UserAgentThemeSwitcher {
 	}
 
 	return $theme['Stylesheet'];
-    }
+    }//switchStylesheet
 
 
-
+    /**
+     * Parse the browsers to find the current browser
+     * @param string $userAgent Optinal useragent
+     */
     public function parseBrowser($userAgent = null) {
 	if($userAgent == null) {
 	    $userAgent = $_SERVER['HTTP_USER_AGENT'];
 	}
 
-	$sql = 'SELECT name, theme, regex FROM '.$this->tablePrefix.'usts_browsers';
-	$results = $this->dbconnection->get_results($sql);
+	$browsers = $this->database->getBrowsers();
+	$countBrowsers = count($browsers);
 
-	for($i = 0; $i < count($results); $i++) {
-	    if($results[$i]->regex != '') {
-		if(@preg_match('/'.$results[$i]->regex.'/Usi', $userAgent)) {
-		    $this->userAgent = $results[$i]->name;
-		    if($results[$i]->theme != '') {
-			$this->theme = $results[$i]->theme;
-		    }
-		    break;
+	for($i = 0; $i < $countBrowsers; $i++) {
+	    if($browsers[$i]->isUserAgentBrowser($userAgent)) {
+		$this->userAgent = $browsers[$i];
+
+		if($browsers[$i]->getTheme() != '') {
+		    $this->theme = $browsers[$i]->getTheme();
+		    $i = $countBrowsers;
 		}
 	    }
 	}
-    }
-
+    }//parseBrowser
 
 
     /**
-     * Metodo que se utiliza para recoger los parametros tanto los que llegan
-     * por GET como por POST
-     * @param string $parameterName Nombre del parametro a recoger
-     * @param bool $isNull Si el parametro no existe devuelve null, sino devuelve ''
-     * @return string Parametro procesado
+     * Get the param by POST or GET methods
+     * @param string $parameterName Param name
+     * @param bool $isNull Indicate if null or empty string if not exists the param
+     * @return string Processed param
      */
     private function getParameter($parameterName, $isNull = false) {
 	if(isset($_REQUEST[$parameterName])) {
@@ -364,7 +310,7 @@ class UserAgentThemeSwitcher {
 	    }
 	}
     }//getParameter
-}//WpMch
+}//UserAgentThemeSwitcher
 
 
 $wpUserAgentThemeSwitcher = new UserAgentThemeSwitcher();

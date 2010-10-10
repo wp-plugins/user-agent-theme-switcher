@@ -20,7 +20,7 @@ Now the cache is not supported but will work so that if it is supported in the f
 
 == Installation ==
 
-Upload the UserAgent Theme Switcher plugin to your blog, Activate it
+Upload the UserAgent Theme Switcher plugin to your blog, Activate it.
 
 == Frequently Asked Questions ==
 
@@ -31,9 +31,23 @@ Now the cache is not supported but will work so that if it is supported in the f
 == Screenshots ==
 
 1. UserAgent theme switcher menu
-2. Administration panel
+2. Browsers with other theme applicated
+3. Rules to set the browser theme by tag or by browser code
 
 == Changelog ==
+
+= 2.0.0 =
+* Rewrite all plugin code added performance at the plugins workflow
+* Separated pages for browsers by theme, debug mode and the future cache
+* Added tags for the browsers same gecko or webkit for firefox and safari for example
+* Added icons for tags and browsers
+* Translate all plugin to english
+* Added the donation button
+* Added support for Internet Explorer 9
+* Added support for Camino
+* Added support for Opera Desktop
+* Added support for IceWeasel
+* Updated Safari Mobile to include the ipodtouch browser
 
 = 1.2.0 =
 * Updated Safari Mobile pattern to add support for iphone
