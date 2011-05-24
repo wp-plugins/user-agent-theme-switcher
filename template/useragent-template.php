@@ -3,7 +3,7 @@
     <table class="widefat page fixed" width="100%" cellpadding="3" cellspacing="3">
 	<thead>
 	    <tr>
-		<th class="manage-column" scope="col">Icon</th>
+		<th class="manage-column" scope="col" width="70">Icon</th>
 		<th class="manage-column" scope="col">Code</th>
 		<th class="manage-column" scope="col">Browser</th>
 		<th class="manage-column" scope="col">Tags</th>
@@ -18,8 +18,8 @@
 	    ?>
 		<tr>
 		    <td><img src="<?php echo $this->blogUrl; ?>/wp-content/plugins/user-agent-theme-switcher/icon/<?php echo $browsersWithTheme[$i]->getCode(); ?>.png" width="50" height="50" /></td>
-		    <td style="line-height: 50px;"><?php echo $browsersWithTheme[$i]->getCode(); ?></td>
-		    <td style="line-height: 50px;"><?php echo $browsersWithTheme[$i]->getName(); ?></td>
+		    <td style="line-height: 50px;"><strong><?php echo $browsersWithTheme[$i]->getCode(); ?></strong></td>
+		    <td style="line-height: 50px;"><strong><?php echo $browsersWithTheme[$i]->getName(); ?></strong></td>
 		    <td style="line-height: 50px;"><?php echo $browsersWithTheme[$i]->getTagsAsString(); ?></td>
 		    <td style="line-height: 50px;"><?php echo $browsersWithTheme[$i]->getTheme(); ?></td>
 		</tr>
@@ -43,7 +43,7 @@
 				    $countBrowersWithoutTheme = count($browsersWithoutTheme);
 
 				    for($i = 0; $i < $countBrowersWithoutTheme; $i++) {
-					echo '<option value="'.$browsersWithoutTheme[$i]->getCode().'">'.$browsersWithoutTheme[$i]->getName().'</option>';
+						echo '<option value="'.$browsersWithoutTheme[$i]->getCode().'">'.$browsersWithoutTheme[$i]->getName().'</option>';
 				    }
 				?>
 			    </select>
@@ -113,7 +113,7 @@
     <table class="widefat page fixed" width="100%" cellpadding="3" cellspacing="3">
 	<thead>
 	    <tr>
-		<th class="manage-column" scope="col">Icon</th>
+		<th class="manage-column" scope="col" width="70">Icon</th>
 		<th class="manage-column" scope="col">Code|Tag</th>
 		<th class="manage-column" scope="col">Theme</th>
 		<th class="manage-column" scope="col">Delete</th>
@@ -127,8 +127,8 @@
 	    ?>
 		<tr>
 		    <td><img src="<?php echo $this->blogUrl; ?>/wp-content/plugins/user-agent-theme-switcher/icon/<?php echo $rules[$i]->code; ?>.png" width="50" height="50" /></td>
-		    <td style="line-height: 50px;"><?php echo $rules[$i]->code; ?></td>
-		    <td style="line-height: 50px;"><?php echo $rules[$i]->theme; ?></td>
+		    <td style="line-height: 50px;"><strong><?php echo $rules[$i]->code; ?></strong></td>
+		    <td style="line-height: 50px;"><strong<?php echo $rules[$i]->theme; ?></strong></td>
 		    <td style="line-height: 50px;">
 			<a href="admin.php?page=<?php echo UserAgentThemeSwitcher::PAGE_TEMPLATE; ?>&action=<?php echo UserAgentThemeSwitcher::ACTION_DELETERULE; ?>&code=<?php echo $rules[$i]->code; ?>">delete</a>
 		    </td>

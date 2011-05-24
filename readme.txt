@@ -36,6 +36,14 @@ Now the cache is not supported but will work so that if it is supported in the f
 
 == Changelog ==
 
+= 2.1.0 =
+* Added WordPress Web (trackback, pingback) and WordPress Android to the spiders type
+* Added support for Ipad (tablet) - Thanks to ovi_mihai
+* Added support for Amazon Kindle (tablet) - Thanks to ovi_mihai
+* Added support for GoogleBot (google)
+* Added support for GoogleBot Mobile (google, mobile)
+* Added tags for spiders and google
+
 = 2.0.0 =
 * Rewrite all plugin code added performance at the plugins workflow
 * Separated pages for browsers by theme, debug mode and the future cache

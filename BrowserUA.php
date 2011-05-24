@@ -249,7 +249,7 @@ class BrowserUA {
      * @param string $tag Tag text
      */
     public function addTag($tag) {
-	$this->tags[] = $tag;
+		$this->tags[] = $tag;
     }//addTag
 
 
@@ -263,7 +263,7 @@ class BrowserUA {
 
 	for($i = 0; $i < $countTags; $i++) {
 	    if($this->tags[$i] == $tag) {
-		return true;
+			return true;
 	    }
 	}
 
@@ -276,11 +276,11 @@ class BrowserUA {
      * @return bool true if the theme are asigned by code
      */
     public function isThemeByCode() {
-	if($this->themeBy == BrowserUA::THEMEBY_CODE) {
-	    return true;
-	}
+		if($this->themeBy == BrowserUA::THEMEBY_CODE) {
+			return true;
+		}
 
-	return false;
+		return false;
     }//isThemeByCode
 
 
@@ -289,17 +289,17 @@ class BrowserUA {
      * @return bool true if the theme are asigned by tag
      */
     public function isThemeByTag() {
-	if($this->themeBy == BrowserUA::THEMEBY_TAG) {
-	    return true;
-	}
+		if($this->themeBy == BrowserUA::THEMEBY_TAG) {
+			return true;
+		}
 
-	return false;
+		return false;
     }//isThemeByTag
 
 
 
     public function isUserAgentBrowser($userAgent) {
-	return @preg_match('/'.$this->regex.'/Usi', $userAgent);
+		return @preg_match('/'.$this->regex.'/Usi', $userAgent);
     }
 }//BrowserUA
 ?>

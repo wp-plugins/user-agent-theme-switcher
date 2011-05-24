@@ -124,8 +124,8 @@ class UserAgentThemeSwitcherData {
 	$browsers = array();
 
 	for($i = 0; $i < $countBrowsers; $i++) {
-	    if(!$this->browsers[$i]->isThemeByCode()) {
-		$browsers[] = $this->browsers[$i];
+	    if(!$this->browsers[$i]->isThemeByCode() && !$this->browsers[$i]->hasTag('spider')) {
+			$browsers[] = $this->browsers[$i];
 	    }
 	}
 
@@ -265,30 +265,37 @@ class UserAgentThemeSwitcherData {
      * Generate all supported browsers
      */
     private function generateBrowsers() {
-	$this->browsers = array();
+		$this->browsers = array();
 
-	$this->addBrowser(new BrowserUA('chrome', 'Google Chrome', null, 'Mozilla\/5.0 \(.*\) AppleWebKit\/.* \(KHTML, like Gecko\) Chrome\/.* Safari\/.*', 'webkit'));
-	$this->addBrowser(new BrowserUA('safaridesktop', 'Safari', null, 'Mozilla\/5\.0 \(.*; .*\) AppleWebKit\/.* \(KHTML, like Gecko\) Version\/[\d\.]+ Safari\/.*', 'webkit'));
-	$this->addBrowser(new BrowserUA('firefox', 'Firefox', null, 'Mozilla\/5\.0 \(.*\) Gecko\/.* Firefox\/.*', 'gecko'));
-	$this->addBrowser(new BrowserUA('safarimobile', 'Safari Mobile', null, 'Mozilla\/5.0 \(.*\) AppleWebKit\/.* \(KHTML, like Gecko\)( Version\/.*){0,1} Mobile[\/A-Z0-9]{0,}( Safari\/.*){0,1}', 'webkit,mobile'));
-	$this->addBrowser(new BrowserUA('ie6', 'Internet Explorer 6', null, 'Mozilla\/4\.0 \(compatible; MSIE 6\.0;.*\).*', 'ie'));
-	$this->addBrowser(new BrowserUA('ie7', 'Internet Explorer 7', null, 'Mozilla\/4\.0 \(compatible; MSIE 7\.0;.*\).*', 'ie'));
-	$this->addBrowser(new BrowserUA('ie8', 'Internet Explorer 8', null, 'Mozilla\/4\.0 \(compatible; MSIE 8\.0;.*\).*', 'ie'));
-	$this->addBrowser(new BrowserUA('ie9', 'Internet Explorer 9', null, 'Mozilla\/5\.0 \(compatible; MSIE 9\.0;.*\).*', 'ie'));
-	$this->addBrowser(new BrowserUA('operamini', 'Opera Mini', null, 'Opera\/.* \(.*Opera Mini\/.*\).*', 'opera,mobile'));
-	$this->addBrowser(new BrowserUA('camino', 'Camino', null, 'Mozilla\/5.0 \(.*\) Gecko\/[\d]+ Camino\/[\d\.]+ \(like Firefox\/[\d\.]+\)', 'gecko'));
-	$this->addBrowser(new BrowserUA('operadesktop', 'Opera', null, 'Opera\/[\d\.]+( ){0,1}\(.*\).*', 'opera'));
-	$this->addBrowser(new BrowserUA('iceweasel', 'IceWeasel', null, 'Mozilla\/5.0 \(.*\) Gecko\/[\d]+ Iceweasel\/[\d\.]+ \(Debian-.*\).*', 'gecko'));
+		$this->addBrowser(new BrowserUA('chrome', 'Google Chrome', null, 'Mozilla\/5.0 \(.*\) AppleWebKit\/.* \(KHTML, like Gecko\) Chrome\/.* Safari\/.*', 'webkit'));
+		$this->addBrowser(new BrowserUA('safaridesktop', 'Safari', null, 'Mozilla\/5\.0 \(.*; .*\) AppleWebKit\/.* \(KHTML, like Gecko\) Version\/[\d\.]+ Safari\/.*', 'webkit'));
+		$this->addBrowser(new BrowserUA('firefox', 'Firefox', null, 'Mozilla\/5\.0 \(.*\) Gecko\/.* Firefox\/.*', 'gecko'));
+		$this->addBrowser(new BrowserUA('safarimobile', 'Safari Mobile', null, 'Mozilla\/5.0 \(.*\) AppleWebKit\/.* \(KHTML, like Gecko\)( Version\/.*){0,1} Mobile[\/A-Z0-9]{0,}( Safari\/.*){0,1}', 'webkit,mobile'));
+		$this->addBrowser(new BrowserUA('ie6', 'Internet Explorer 6', null, 'Mozilla\/4\.0 \(compatible; MSIE 6\.0;.*\).*', 'ie'));
+		$this->addBrowser(new BrowserUA('ie7', 'Internet Explorer 7', null, 'Mozilla\/4\.0 \(compatible; MSIE 7\.0;.*\).*', 'ie'));
+		$this->addBrowser(new BrowserUA('ie8', 'Internet Explorer 8', null, 'Mozilla\/4\.0 \(compatible; MSIE 8\.0;.*\).*', 'ie'));
+		$this->addBrowser(new BrowserUA('ie9', 'Internet Explorer 9', null, 'Mozilla\/5\.0 \(compatible; MSIE 9\.0;.*\).*', 'ie'));
+		$this->addBrowser(new BrowserUA('operamini', 'Opera Mini', null, 'Opera\/.* \(.*Opera Mini\/.*\).*', 'opera,mobile'));
+		$this->addBrowser(new BrowserUA('camino', 'Camino', null, 'Mozilla\/5.0 \(.*\) Gecko\/[\d]+ Camino\/[\d\.]+ \(like Firefox\/[\d\.]+\)', 'gecko'));
+		$this->addBrowser(new BrowserUA('operadesktop', 'Opera', null, 'Opera\/[\d\.]+( ){0,1}\(.*\).*', 'opera'));
+		$this->addBrowser(new BrowserUA('iceweasel', 'IceWeasel', null, 'Mozilla\/5.0 \(.*\) Gecko\/[\d]+ Iceweasel\/[\d\.]+ \(Debian-.*\).*', 'gecko'));
+		
+		$this->addBrowser(new BrowserUA('ipad', 'iPad', null, 'Mozilla\/5.0 \(iPad; .*\).*', 'tablet'));
+		$this->addBrowser(new BrowserUA('kindle', 'Amazon Kindle', null, 'Mozilla\/5\.0 \(.*\) AppleWebKit\/.* \(KHTML, like Gecko(.*) Version\/[\d\.]+ Kindle\/.*', 'tablet'));
+		$this->addBrowser(new BrowserUA('wordpressweb', 'Wordpress Web', null, 'WordPress\/(.*\)$', 'spider'));
+		$this->addBrowser(new BrowserUA('wordpressandroid', 'Wordpress Android', null, 'wp-android\/(.*\)$', 'spider'));
+		$this->addBrowser(new BrowserUA('googlebot', 'GoogleBot', null, '^Mozilla/5.0 \(compatible; Googlebot/.\..; +http://www.google.com/bot.html\)$', 'google'));
+		$this->addBrowser(new BrowserUA('googlebotmobile', 'GoogleBot Mobile', null, '\(compatible; Googlebot-Mobile\/.\..; \+http:\/\/www\.google.com\/bot.html\)$', 'google,mobile'));
 
-	$configuratedTemplates = $this->getConfiguratedTemplates();
-	$countConfiguredBrowsers = count($configuratedTemplates);
-	$countBrowsers = count($this->browsers);
+		$configuratedTemplates = $this->getConfiguratedTemplates();
+		$countConfiguredBrowsers = count($configuratedTemplates);
+		$countBrowsers = count($this->browsers);
 
-	for($i = 0; $i < $countConfiguredBrowsers; $i++) {
-	    for($j = 0; $j < $countBrowsers; $j++) {
-		$this->browsers[$j]->setThemeByCodeTag($configuratedTemplates[$i]->code, $configuratedTemplates[$i]->theme);
-	    }
-	}
+		for($i = 0; $i < $countConfiguredBrowsers; $i++) {
+			for($j = 0; $j < $countBrowsers; $j++) {
+				$this->browsers[$j]->setThemeByCodeTag($configuratedTemplates[$i]->code, $configuratedTemplates[$i]->theme);
+			}
+		}
     }//generateBrowsers
 }//UserAgentThemeSwitcherData
 ?>

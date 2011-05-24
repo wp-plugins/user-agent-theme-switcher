@@ -5,7 +5,7 @@ Plugin URI: http://www.indalcasa.com
 Description: This plugins switch theme for any useragent, specialy for iphone, chrome mobile, opera mobile, etc. or in a groups of browser same "mobile" or IE to add this template at all browser of this category
 Author: Juan Benavides Romero
 Author URI: http://www.indalcasa.com
-Version: 2.0.0
+Version: 2.1.0
 */
 
 
@@ -192,13 +192,13 @@ class UserAgentThemeSwitcher {
      * Load the administrator page for set a theme by browser
      */
     public function processUserAgentTemplate() {
-	$browsersWithoutTheme = $this->database->getBrowsersWithoutTheme();
-	$browsersWithTheme = $this->database->getBrowsersWithTheme();
-	$rules = $this->database->getConfiguratedTemplates();
-	$themes = get_themes();
-	$tags = $this->database->getTags();
+		$browsersWithoutTheme = $this->database->getBrowsersWithoutTheme();
+		$browsersWithTheme = $this->database->getBrowsersWithTheme();
+		$rules = $this->database->getConfiguratedTemplates();
+		$themes = get_themes();
+		$tags = $this->database->getTags();
 
-	include('template/'.UserAgentThemeSwitcher::PAGE_TEMPLATE.'.php');
+		include('template/'.UserAgentThemeSwitcher::PAGE_TEMPLATE.'.php');
     }//processUserAgentTemplate
 
 
