@@ -284,7 +284,7 @@ class UserAgentThemeSwitcherData {
 		$this->addBrowser(new BrowserUA('kindle', 'Amazon Kindle', null, 'Mozilla\/5\.0 \(.*\) AppleWebKit\/.* \(KHTML, like Gecko(.*) Version\/[\d\.]+ Kindle\/.*', 'tablet'));
 		$this->addBrowser(new BrowserUA('wordpressweb', 'Wordpress Web', null, 'WordPress\/(.*\)$', 'spider'));
 		$this->addBrowser(new BrowserUA('wordpressandroid', 'Wordpress Android', null, 'wp-android\/(.*\)$', 'spider'));
-		$this->addBrowser(new BrowserUA('googlebot', 'GoogleBot', null, '^Mozilla/5.0 \(compatible; Googlebot/.\..; +http://www.google.com/bot.html\)$', 'google'));
+		$this->addBrowser(new BrowserUA('googlebot', 'GoogleBot', null, '^Mozilla/5.0 \(compatible; Googlebot/.\..; +http:\/\/www\.google\.com\/bot\.html\)$', 'google'));
 		$this->addBrowser(new BrowserUA('googlebotmobile', 'GoogleBot Mobile', null, '\(compatible; Googlebot-Mobile\/.\..; \+http:\/\/www\.google.com\/bot.html\)$', 'google,mobile'));
 
 		$configuratedTemplates = $this->getConfiguratedTemplates();
