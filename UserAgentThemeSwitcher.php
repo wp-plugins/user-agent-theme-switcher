@@ -53,7 +53,7 @@ class UserAgentThemeSwitcher {
      * Plugin compilation version to add news database features
      * @var int
      */
-    private $version = 200;
+    private $version = 220;
 
 
     /**
