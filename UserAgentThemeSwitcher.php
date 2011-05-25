@@ -26,6 +26,13 @@ class UserAgentThemeSwitcher {
      * @var BrowserUA
      */
     private $userAgent = null;
+	
+	
+	/**
+     * To check useragent
+     * @var BrowserUA
+     */
+    private $checkUserAgent = null;
   
 
     /**
@@ -78,6 +85,12 @@ class UserAgentThemeSwitcher {
      * Constant action to update debug mode
      */
     const ACTION_DEBUG = 'updatedebug';
+	
+	
+	/**
+	 * Constant action to check useragent
+	 */
+	const ACTION_CHECKUSERAGENT = 'checkuseragent';
 
 
     /**
@@ -114,8 +127,8 @@ class UserAgentThemeSwitcher {
      * Default constructor. Include the files to works
      */
     public function __construct() {
-	include('BrowserUA.php');
-	include('UserAgentThemeSwitcherData.php');
+		include('BrowserUA.php');
+		include('UserAgentThemeSwitcherData.php');
     }//__construct
 
 
@@ -125,23 +138,23 @@ class UserAgentThemeSwitcher {
      * @global string $table_prefix Database table prefix
      */
     public function initialize() {
-	global $wpdb;
-	global $table_prefix;
-	
-	$this->database = new UserAgentThemeSwitcherData($wpdb, $table_prefix);
-	$this->path = dirname(__FILE__);
-	$this->blogUrl = get_bloginfo('wpurl');
+		global $wpdb;
+		global $table_prefix;
+		
+		$this->database = new UserAgentThemeSwitcherData($wpdb, $table_prefix);
+		$this->path = dirname(__FILE__);
+		$this->blogUrl = get_bloginfo('wpurl');
 
-	$this->database->updateDatabase($this->version);
+		$this->database->updateDatabase($this->version);
 
-	$this->processAction();
-	$this->parseBrowser();
-	//load_plugin_textdomain('useragenthemeswitcher', false, $this->path);
+		$this->processAction();
+		$this->parseBrowser();
+		//load_plugin_textdomain('useragenthemeswitcher', false, $this->path);
 
-	add_action('admin_menu', array($this, 'createMenu'));
-	add_action('init', array($this, 'pageProcess'));
-	add_filter('template', array(&$this, 'switchTemplate'));
-	add_filter('stylesheet', array(&$this, 'switchStylesheet'));
+		add_action('admin_menu', array($this, 'createMenu'));
+		add_action('init', array($this, 'pageProcess'));
+		add_filter('template', array(&$this, 'switchTemplate'));
+		add_filter('stylesheet', array(&$this, 'switchStylesheet'));
     }//initialize
 
 
@@ -149,42 +162,44 @@ class UserAgentThemeSwitcher {
      * Process the actions for the admin menu
      */
     private function processAction() {
-	$page = $this->getParameter('page');
-	$action = $this->getParameter('action');
+		$page = $this->getParameter('page');
+		$action = $this->getParameter('action');
 
-	if($page == UserAgentThemeSwitcher::PAGE_TEMPLATE) {
-	    if($action == UserAgentThemeSwitcher::ACTION_DELETERULE) {
-		$this->database->deleteRule($this->getParameter('code'));
-	    } else if($action == UserAgentThemeSwitcher::ACTION_SYNCBROWSER) {
-		$this->database->addRule($this->getParameter('browser'), $this->getParameter('theme'));
-	    } else if($action == UserAgentThemeSwitcher::ACTION_SYNCTAG) {
-		$this->database->addRule($this->getParameter('tag'), $this->getParameter('theme'));
-	    }
-	} else if($page == UserAgentThemeSwitcher::PAGE_DEBUG) {
-	    if($action == UserAgentThemeSwitcher::ACTION_DEBUG) {
-		if($this->getParameter('debug') == null) {
-		    update_option(UserAgentThemeSwitcherData::DEBUG_KEY, "false");
-		} else {
-		    update_option(UserAgentThemeSwitcherData::DEBUG_KEY, "true");
+		if($page == UserAgentThemeSwitcher::PAGE_TEMPLATE) {
+			if($action == UserAgentThemeSwitcher::ACTION_DELETERULE) {
+				$this->database->deleteRule($this->getParameter('code'));
+			} else if($action == UserAgentThemeSwitcher::ACTION_SYNCBROWSER) {
+				$this->database->addRule($this->getParameter('browser'), $this->getParameter('theme'));
+			} else if($action == UserAgentThemeSwitcher::ACTION_SYNCTAG) {
+				$this->database->addRule($this->getParameter('tag'), $this->getParameter('theme'));
+			}
+		} else if($page == UserAgentThemeSwitcher::PAGE_DEBUG) {
+			if($action == UserAgentThemeSwitcher::ACTION_DEBUG) {
+				if($this->getParameter('debug') == null) {
+					update_option(UserAgentThemeSwitcherData::DEBUG_KEY, "false");
+				} else {
+					update_option(UserAgentThemeSwitcherData::DEBUG_KEY, "true");
+				}
+			} else if($action == UserAgentThemeSwitcher::ACTION_REPORTUSERAGENT) {
+				mail('juan.benavides.romero@gmail.com', 'Unsoported useragent report', $this->getParameter('useragent'));
+			} else if($action == UserAgentThemeSwitcher::ACTION_DELETEUSERAGENT) {
+				$this->database->deleteUserAgent($this->getParameter('useragent'));
+			} else if($action == UserAgentThemeSwitcher::ACTION_TRUNCATEDEBUGUSERAGENT) {
+				$this->database->truncateDebugUserAgents();
+			} else if($action == UserAgentThemeSwitcher::ACTION_CHECKUSERAGENT) {
+				$this->checkUserAgent = $this->checkBrowser($this->getParameter('useragenttocheck'));
+			}
 		}
-	    } else if($action == UserAgentThemeSwitcher::ACTION_REPORTUSERAGENT) {
-		mail('juan.benavides.romero@gmail.com', 'Unsoported useragent report', $this->getParameter('useragent'));
-	    } else if($action == UserAgentThemeSwitcher::ACTION_DELETEUSERAGENT) {
-		$this->database->deleteUserAgent($this->getParameter('useragent'));
-	    } else if($action == UserAgentThemeSwitcher::ACTION_TRUNCATEDEBUGUSERAGENT) {
-		$this->database->truncateDebugUserAgents();
-	    }
-	}
     }//processAction
 
 
-    /**
-     * Create the admin menu structure
-     */
-    public function createMenu() {
-	add_menu_page('Theme Switcher', 'Theme Switcher', 'manage_options', UserAgentThemeSwitcher::PAGE_TEMPLATE, array($this, 'processUserAgentTemplate'), null);
-	add_submenu_page(UserAgentThemeSwitcher::PAGE_TEMPLATE, 'Cache', 'cache options', 'manage_options', 'useragent-cache', array($this, 'processUserAgentCache'), null);
-	add_submenu_page(UserAgentThemeSwitcher::PAGE_TEMPLATE, 'Unsoported user agents', 'debuged useragents', 'manage_options', 'useragent-debug', array($this, 'processUserAgentDebug'), null);
+	/**
+	 * Create the admin menu structure
+	 */
+	public function createMenu() {
+		add_menu_page('Theme Switcher', 'Theme Switcher', 'manage_options', UserAgentThemeSwitcher::PAGE_TEMPLATE, array($this, 'processUserAgentTemplate'), null);
+		add_submenu_page(UserAgentThemeSwitcher::PAGE_TEMPLATE, 'Cache', 'cache options', 'manage_options', 'useragent-cache', array($this, 'processUserAgentCache'), null);
+		add_submenu_page(UserAgentThemeSwitcher::PAGE_TEMPLATE, 'Unsoported user agents', 'debuged useragents', 'manage_options', 'useragent-debug', array($this, 'processUserAgentDebug'), null);
     }//createMenu
 
 
@@ -206,7 +221,7 @@ class UserAgentThemeSwitcher {
      * Load the administrator page for set the cache options
      */
     public function processUserAgentCache() {
-	include('template/useragent-cache.php');
+		include('template/useragent-cache.php');
     }//processUserAgentCache
 
 
@@ -214,12 +229,16 @@ class UserAgentThemeSwitcher {
      * Load the administrator page for debug options
      */
     public function processUserAgentDebug() {
-	$isDebug = get_option(UserAgentThemeSwitcherData::DEBUG_KEY);
-	$useragents = $this->database->getDebugUserAgents();
+		$isDebug = get_option(UserAgentThemeSwitcherData::DEBUG_KEY);
+		$useragents = $this->database->getDebugUserAgents();
+		
+		$useragentName = '';
+		
+		if($this->checkUserAgent != null) {
+			$useragentName = $this->checkUserAgent->getName();
+		}
 
-	//print_r($useragents); die;
-
-	include('template/useragent-debug.php');
+		include('template/useragent-debug.php');
     }//processUserAgentDebug
 
 
@@ -227,12 +246,12 @@ class UserAgentThemeSwitcher {
      * Process a page load to register a new unsporoted useragent if the debug mode is active
      */
     public function pageProcess() {
-	$debugmode = get_option(UserAgentThemeSwitcherData::DEBUG_KEY);
+		$debugmode = get_option(UserAgentThemeSwitcherData::DEBUG_KEY);
 
-	if($debugmode == 'true' && $this->userAgent == null) {
-	    $useragent = $_SERVER['HTTP_USER_AGENT'];
-	    $this->database->addDebugUserAgent($useragent);
-	}
+		if($debugmode == 'true' && $this->userAgent == null) {
+			$useragent = $_SERVER['HTTP_USER_AGENT'];
+			$this->database->addDebugUserAgent($useragent);
+		}
     }//pageProcess
 
 
@@ -242,13 +261,13 @@ class UserAgentThemeSwitcher {
      * @return Template name
      */
     public function switchTemplate($template) {
-	if($this->theme != null) {
-	    $theme = get_theme($this->theme);
-	} else {
-	    return $template;
-	}
+		if($this->theme != null) {
+			$theme = get_theme($this->theme);
+		} else {
+			return $template;
+		}
 
-	return $theme['Template'];
+		return $theme['Template'];
     }//switchTemplate
 
 
@@ -258,13 +277,13 @@ class UserAgentThemeSwitcher {
      * @return string
      */
     public function switchStylesheet($stylesheet = '') {
-	if($this->theme != null) {
-	    $theme = get_theme($this->theme);
-	} else {
-	    return $stylesheet;
-	}
+		if($this->theme != null) {
+			$theme = get_theme($this->theme);
+		} else {
+			return $stylesheet;
+		}
 
-	return $theme['Stylesheet'];
+		return $theme['Stylesheet'];
     }//switchStylesheet
 
 
@@ -273,25 +292,51 @@ class UserAgentThemeSwitcher {
      * @param string $userAgent Optinal useragent
      */
     public function parseBrowser($userAgent = null) {
-	if($userAgent == null) {
-	    $userAgent = $_SERVER['HTTP_USER_AGENT'];
-	}
-
-	$browsers = $this->database->getBrowsers();
-	$countBrowsers = count($browsers);
-
-	for($i = 0; $i < $countBrowsers; $i++) {
-	    if($browsers[$i]->isUserAgentBrowser($userAgent)) {
-		$this->userAgent = $browsers[$i];
-
-		if($browsers[$i]->getTheme() != '') {
-		    $this->theme = $browsers[$i]->getTheme();
-		    $i = $countBrowsers;
+		if($userAgent == null) {
+			$userAgent = $_SERVER['HTTP_USER_AGENT'];
 		}
-	    }
-	}
-    }//parseBrowser
 
+		$browsers = $this->database->getBrowsers();
+		$countBrowsers = count($browsers);
+
+		for($i = 0; $i < $countBrowsers; $i++) {
+			if($browsers[$i]->isUserAgentBrowser($userAgent)) {
+				$this->userAgent = $browsers[$i];
+
+				if($browsers[$i]->getTheme() != '') {
+					$this->theme = $browsers[$i]->getTheme();
+					$i = $countBrowsers;
+				}
+			}
+		}
+    }//parseBrowser
+	
+	
+	
+	/**
+     * Parse the browsers to find the current browser and return this
+     * @param string $userAgent Optinal useragent
+	 * @return BrowserUA Browser if findit, null its don't
+     */
+    public function checkBrowser($userAgent = null) {
+		if($userAgent == null) {
+			return null;
+		}
+
+		$browsers = $this->database->getBrowsers();
+		$countBrowsers = count($browsers);
+		$browser = null;
+
+		for($i = 0; $i < $countBrowsers; $i++) {
+			if($browsers[$i]->isUserAgentBrowser($userAgent)) {
+				$browser = $browsers[$i];
+			}
+		}
+		
+		return $browser;
+    }//checkBrowser
+	
+	
 
     /**
      * Get the param by POST or GET methods

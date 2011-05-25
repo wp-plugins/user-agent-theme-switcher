@@ -8,14 +8,27 @@
 <div class="wrap">
     <h2>Debug mode</h2>
     <div class="postbox">
-	<div style="margin: 7px;">
-	    <form method="get" action="<?php echo $this->blogUrl; ?>/wp-admin/admin.php">
-		<input type="hidden" name="page" value="<?php echo UserAgentThemeSwitcher::PAGE_DEBUG; ?>" />
-		<input type="hidden" name="action" value="<?php echo UserAgentThemeSwitcher::ACTION_DEBUG; ?>" />
-		<p><label>Debug mode: <input type="checkbox" name="debug" <?php echo $debug; ?> /></label></p>
-		<p><input type="submit" value="update" class="button bold" /></p>
-	    </form>
-	</div>
+		<div style="margin: 7px;">
+			<form method="get" action="<?php echo $this->blogUrl; ?>/wp-admin/admin.php">
+				<input type="hidden" name="page" value="<?php echo UserAgentThemeSwitcher::PAGE_DEBUG; ?>" />
+				<input type="hidden" name="action" value="<?php echo UserAgentThemeSwitcher::ACTION_DEBUG; ?>" />
+				<p><label>Debug mode: <input type="checkbox" name="debug" <?php echo $debug; ?> /></label></p>
+				<p><input type="submit" value="update" class="button bold" /></p>
+			</form>
+		</div>
+    </div>
+	<div class="postbox">
+		<div style="margin: 7px;">
+			<strong>Test useragent</strong>
+			<form method="get" action="<?php echo $this->blogUrl; ?>/wp-admin/admin.php">
+				<input type="hidden" name="page" value="<?php echo UserAgentThemeSwitcher::PAGE_DEBUG; ?>" />
+				<input type="hidden" name="action" value="<?php echo UserAgentThemeSwitcher::ACTION_CHECKUSERAGENT; ?>" />
+				<p><label>UserAgent: <input type="text" name="useragenttocheck" value="<?php echo $this->getParameter('useragenttocheck'); ?>" style="width: 100%" /></label></p>
+				<p><strong><?php echo $useragentName; ?></strong></p>
+				
+				<p><input type="submit" value="check" class="button bold" /></p>
+			</form>
+		</div>
     </div>
     <?php
 	if(get_option(UserAgentThemeSwitcherData::DEBUG_KEY) == 'true') {

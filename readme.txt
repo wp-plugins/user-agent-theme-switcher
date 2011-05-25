@@ -36,6 +36,10 @@ Now the cache is not supported but will work so that if it is supported in the f
 
 == Changelog ==
 
+= 2.1.1 =
+* Fix problem with googlebot useragent
+* Added debug option to test the useragents
+
 = 2.1.0 =
 * Added WordPress Web (trackback, pingback) and WordPress Android to the spiders type
 * Added support for Ipad (tablet) - Thanks to ovi_mihai
