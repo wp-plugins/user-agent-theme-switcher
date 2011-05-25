@@ -1,0 +1,181 @@
+<Browsers>
+	<Browser code="chrome">
+		<Name>Google Chrome</Name>
+		<Pattern>Mozilla\/5.0 \(.*\) AppleWebKit\/.* \(KHTML, like Gecko\) Chrome\/.* Safari\/.*</Pattern>
+		<Tags>
+			<Tag>webkit</Tag>
+		</Tags>
+		<UserAgents>
+			<UserAgent></UserAgent>
+		</UserAgents>
+	</Browser><Browser code="safaridesktop">
+		<Name>Safari</Name>
+		<Pattern>Mozilla\/5\.0 \(.*; .*\) AppleWebKit\/.* \(KHTML, like Gecko\) Version\/[\d\.]+ Safari\/.*</Pattern>
+		<Tags>
+			<Tag>webkit</Tag>
+		</Tags>
+		<UserAgents>
+			<UserAgent></UserAgent>
+		</UserAgents>
+	</Browser><Browser code="firefox">
+		<Name>Firefox</Name>
+		<Pattern>Mozilla\/5\.0 \(.*\) Gecko\/.* Firefox\/.*</Pattern>
+		<Tags>
+			<Tag>gecko</Tag>
+		</Tags>
+		<UserAgents>
+			<UserAgent></UserAgent>
+		</UserAgents>
+	</Browser><Browser code="safarimobile">
+		<Name>Safari Mobile</Name>
+		<Pattern>Mozilla\/5.0 \(.*\) AppleWebKit\/.* \(KHTML, like Gecko\)( Version\/.*){0,1} Mobile[\/A-Z0-9]{0,}( Safari\/.*){0,1}</Pattern>
+		<Tags>
+			<Tag>webkit</Tag>
+			<Tag>mobile</Tag>
+		</Tags>
+		<UserAgents>
+			<UserAgent></UserAgent>
+		</UserAgents>
+	</Browser><Browser code="ie6">
+		<Name>Internet Explorer 6</Name>
+		<Pattern>Mozilla\/4\.0 \(compatible; MSIE 6\.0;.*\).*</Pattern>
+		<Tags>
+			<Tag>ie</Tag>
+		</Tags>
+		<UserAgents>
+			<UserAgent></UserAgent>
+		</UserAgents>
+	</Browser>
+	<Browser code="ie7">
+		<Name>Internet Explorer 7</Name>
+		<Pattern>Mozilla\/4\.0 \(compatible; MSIE 7\.0;.*\).*</Pattern>
+		<Tags>
+			<Tag>ie</Tag>
+		</Tags>
+		<UserAgents>
+			<UserAgent></UserAgent>
+		</UserAgents>
+	</Browser>
+	<Browser code="ie8">
+		<Name>Internet Explorer 8</Name>
+		<Pattern>Mozilla\/4\.0 \(compatible; MSIE 8\.0;.*\).*</Pattern>
+		<Tags>
+			<Tag>ie</Tag>
+		</Tags>
+		<UserAgents>
+			<UserAgent></UserAgent>
+		</UserAgents>
+	</Browser>
+	<Browser code="ie9">
+		<Name>Internet Explorer 9</Name>
+		<Pattern>Mozilla\/5\.0 \(compatible; MSIE 9\.0;.*\).*</Pattern>
+		<Tags>
+			<Tag>ie</Tag>
+		</Tags>
+		<UserAgents>
+			<UserAgent></UserAgent>
+		</UserAgents>
+	</Browser>
+	<Browser code="operamini">
+		<Name>Opera Mini</Name>
+		<Pattern>Opera\/.* \(.*Opera Mini\/.*\).*</Pattern>
+		<Tags>
+			<Tag>opera</Tag>
+			<Tag>mobile</Tag>
+		</Tags>
+		<UserAgents>
+			<UserAgent></UserAgent>
+		</UserAgents>
+	</Browser>
+	<Browser code="camino">
+		<Name>Camino</Name>
+		<Pattern>Mozilla\/5.0 \(.*\) Gecko\/[\d]+ Camino\/[\d\.]+ \(like Firefox\/[\d\.]+\)</Pattern>
+		<Tags>
+			<Tag>gecko</Tag>
+		</Tags>
+		<UserAgents>
+			<UserAgent></UserAgent>
+		</UserAgents>
+	</Browser>
+	<Browser code="operadesktop">
+		<Name>Opera</Name>
+		<Pattern>Opera\/[\d\.]+( ){0,1}\(.*\).*</Pattern>
+		<Tags>
+			<Tag>opera</Tag>
+		</Tags>
+		<UserAgents>
+			<UserAgent></UserAgent>
+		</UserAgents>
+	</Browser>
+	<Browser code="iceweasel">
+		<Name>IceWeasel</Name>
+		<Pattern>Mozilla\/5.0 \(.*\) Gecko\/[\d]+ Iceweasel\/[\d\.]+ \(Debian-.*\).*</Pattern>
+		<Tags>
+			<Tag>gecko</Tag>
+		</Tags>
+		<UserAgents>
+			<UserAgent></UserAgent>
+		</UserAgents>
+	</Browser>
+	<Browser code="ipad">
+		<Name>iPad</Name>
+		<Pattern>Mozilla\/5.0 \(iPad; .*\).*</Pattern>
+		<Tags>
+			<Tag>tablet</Tag>
+		</Tags>
+		<UserAgents>
+			<UserAgent></UserAgent>
+		</UserAgents>
+	</Browser>
+	<Browser code="kindle">
+		<Name>Amazon Kindle</Name>
+		<Pattern>Mozilla\/5\.0 \(.*\) AppleWebKit\/.* \(KHTML, like Gecko(.*) Version\/[\d\.]+ Kindle\/.*</Pattern>
+		<Tags>
+			<Tag>tablet</Tag>
+		</Tags>
+		<UserAgents>
+			<UserAgent></UserAgent>
+		</UserAgents>
+	</Browser>
+	<Browser code="wordpressweb">
+		<Name>Wordpress Web</Name>
+		<Pattern>WordPress\/(.*\)$</Pattern>
+		<Tags>
+			<Tag>spider</Tag>
+		</Tags>
+		<UserAgents>
+			<UserAgent></UserAgent>
+		</UserAgents>
+	</Browser>
+	<Browser code="wordpressandroid">
+		<Name>Wordpress Android</Name>
+		<Pattern>wp-android\/(.*\)$</Pattern>
+		<Tags>
+			<Tag>spider</Tag>
+		</Tags>
+		<UserAgents>
+			<UserAgent></UserAgent>
+		</UserAgents>
+	</Browser>
+	<Browser code="googlebot">
+		<Name>GoogleBot</Name>
+		<Pattern>^Mozilla\/5\.0 \(compatible; Googlebot\/.\..; \+http:\/\/www\.google\.com\/bot\.html\)$</Pattern>
+		<Tags>
+			<Tag>google</Tag>
+		</Tags>
+		<UserAgents>
+			<UserAgent>Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)</UserAgent>
+		</UserAgents>
+	</Browser>
+	<Browser code="googlebotmobile">
+		<Name>GoogleBot Mobile</Name>
+		<Pattern>\(compatible; Googlebot-Mobile\/.\..; \+http:\/\/www\.google.com\/bot.html\)$</Pattern>
+		<Tags>
+			<Tag>google</Tag>
+			<Tag>mobile</Tag>
+		</Tags>
+		<UserAgents>
+			<UserAgent></UserAgent>
+		</UserAgents>
+	</Browser>
+</Browsers>
