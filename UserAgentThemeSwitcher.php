@@ -5,7 +5,7 @@ Plugin URI: http://www.indalcasa.com
 Description: This plugins switch theme for any useragent, specialy for iphone, chrome mobile, opera mobile, etc. or in a groups of browser same "mobile" or IE to add this template at all browser of this category
 Author: Juan Benavides Romero
 Author URI: http://www.indalcasa.com
-Version: 2.1.0
+Version: 2.1.1
 */
 
 
