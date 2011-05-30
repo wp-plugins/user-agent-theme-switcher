@@ -55,10 +55,10 @@ class UserAgentThemeSwitcherData {
      * @param string $tableprefix Database table prefix
      */
     public function __construct(wpdb $connection = null, $tableprefix = '') {
-	$this->connection = $connection;
-	$this->tablePrefix = $tableprefix;
+		$this->connection = $connection;
+		$this->tablePrefix = $tableprefix;
 
-	$this->generateBrowsers();
+		$this->generateBrowsers();
     }//__construct
 
 
@@ -68,17 +68,17 @@ class UserAgentThemeSwitcherData {
      * @param int $version Current plugin version
      */
     public function updateDatabase($version) {
-	$installedVersion = get_option(UserAgentThemeSwitcherData::VERSION_KEY, 0);
+		$installedVersion = get_option(UserAgentThemeSwitcherData::VERSION_KEY, 0);
 
-	if($installedVersion == 0) {
-	    $this->createDatabase($version);
-	}
+		if($installedVersion == 0) {
+			$this->createDatabase($version);
+		}
 
-	if($installedVersion != $version) {
-	    if($version != 0) {
-		add_option(UserAgentThemeSwitcherData::VERSION_KEY, $version);
-	    }
-	}
+		if($installedVersion != $version) {
+			if($version != 0) {
+				add_option(UserAgentThemeSwitcherData::VERSION_KEY, $version);
+			}
+		}
     }//updateDatabase
 
 
@@ -87,22 +87,22 @@ class UserAgentThemeSwitcherData {
      * @param int $version Current plugin version
      */
     private function createDatabase($version = 0) {
-	$sql = 'CREATE TABLE IF NOT EXISTS '.$this->tablePrefix.UserAgentThemeSwitcherData::USERAGENTS_TABLE.' (';
-	$sql .= '`id` INT NOT NULL AUTO_INCREMENT,';
-	$sql .= '`useragent` VARCHAR(255) NOT NULL,';
-	$sql .= 'PRIMARY KEY (`id`)';
-	$sql .= ') ENGINE=MYISAM;';
-	$this->connection->get_results($sql);
+		$sql = 'CREATE TABLE IF NOT EXISTS '.$this->tablePrefix.UserAgentThemeSwitcherData::USERAGENTS_TABLE.' (';
+		$sql .= '`id` INT NOT NULL AUTO_INCREMENT,';
+		$sql .= '`useragent` VARCHAR(255) NOT NULL,';
+		$sql .= 'PRIMARY KEY (`id`)';
+		$sql .= ') ENGINE=MYISAM;';
+		$this->connection->get_results($sql);
 
-	$sql = 'CREATE TABLE IF NOT EXISTS '.$this->tablePrefix.UserAgentThemeSwitcherData::BROWSERS_TABLE.' (';
-	$sql .= '`code` varchar(20) NOT NULL,';
-	$sql .= '`theme` varchar(50) DEFAULT NULL,';
-	$sql .= 'PRIMARY KEY (`code`)';
-	$sql .= ') ENGINE=MyISAM;';
-	$this->connection->get_results($sql);
+		$sql = 'CREATE TABLE IF NOT EXISTS '.$this->tablePrefix.UserAgentThemeSwitcherData::BROWSERS_TABLE.' (';
+		$sql .= '`code` varchar(20) NOT NULL,';
+		$sql .= '`theme` varchar(50) DEFAULT NULL,';
+		$sql .= 'PRIMARY KEY (`code`)';
+		$sql .= ') ENGINE=MyISAM;';
+		$this->connection->get_results($sql);
 
-	add_option(UserAgentThemeSwitcherData::DEBUG_KEY, 'false');
-	add_option(UserAgentThemeSwitcherData::VERSION_KEY, $version);
+		add_option(UserAgentThemeSwitcherData::DEBUG_KEY, 'false');
+		add_option(UserAgentThemeSwitcherData::VERSION_KEY, $version);
     }//createDatabase
 
 
@@ -111,7 +111,7 @@ class UserAgentThemeSwitcherData {
      * @return array<BrowserUA> List of browsers
      */
     public function getBrowsers() {
-	return $this->browsers;
+		return $this->browsers;
     }//getBrowsers
 
 
@@ -120,16 +120,16 @@ class UserAgentThemeSwitcherData {
      * @return array<BrowserUA> List of browsers without theme
      */
     public function getBrowsersWithoutTheme() {
-	$countBrowsers = count($this->browsers);
-	$browsers = array();
+		$countBrowsers = count($this->browsers);
+		$browsers = array();
 
-	for($i = 0; $i < $countBrowsers; $i++) {
-	    if(!$this->browsers[$i]->isThemeByCode() && !$this->browsers[$i]->hasTag('spider')) {
-			$browsers[] = $this->browsers[$i];
-	    }
-	}
+		for($i = 0; $i < $countBrowsers; $i++) {
+			if(!$this->browsers[$i]->isThemeByCode() && !$this->browsers[$i]->hasTag('spider')) {
+				$browsers[] = $this->browsers[$i];
+			}
+		}
 
-	return $browsers;
+		return $browsers;
     }//getBrowsersWithoutTheme
 
 
@@ -138,16 +138,16 @@ class UserAgentThemeSwitcherData {
      * @return array<BrowserUA> List of browsers with theme
      */
     public function getBrowsersWithTheme() {
-	$countBrowsers = count($this->browsers);
-	$browsers = array();
+		$countBrowsers = count($this->browsers);
+		$browsers = array();
 
-	for($i = 0; $i < $countBrowsers; $i++) {
-	    if($this->browsers[$i]->hasTheme()) {
-		$browsers[] = $this->browsers[$i];
-	    }
-	}
+		for($i = 0; $i < $countBrowsers; $i++) {
+			if($this->browsers[$i]->hasTheme()) {
+				$browsers[] = $this->browsers[$i];
+			}
+		}
 
-	return $browsers;
+		return $browsers;
     }//getBrowsersWithTheme
 
 
@@ -156,19 +156,35 @@ class UserAgentThemeSwitcherData {
      * @return array List of tags
      */
     public function getTags() {
-	$tags = array();
-	$countBrowsers = count($this->browsers);
+		$tags = array();
+		$countBrowsers = count($this->browsers);
 
-	for($i = 0; $i < $countBrowsers; $i++) {
-	    for($j = 0; $j < count($this->browsers[$i]->getTags()); $j++) {
-		if(!in_array($this->browsers[$i]->getTag($j), $tags)) {
-		    $tags[] = $this->browsers[$i]->getTag($j);
+		for($i = 0; $i < $countBrowsers; $i++) {
+			for($j = 0; $j < count($this->browsers[$i]->getTags()); $j++) {
+				if(!in_array($this->browsers[$i]->getTag($j), $tags)) {
+					$tags[] = $this->browsers[$i]->getTag($j);
+				}
+			}
 		}
-	    }
-	}
 
-	return $tags;
+		return $tags;
     }//getTags
+	
+	
+	
+	public function getWebTags() {
+		$tags = $this->getTags();
+		$webTags = array();
+
+		for($i = 0; $i < count($tags); $i++) {
+			if($tags[$i] != 'spider') {
+				$webTags[] = $tags[$i];
+			}
+		}
+		
+		return $webTags;
+	}
+	
 
 
     /**
@@ -176,10 +192,10 @@ class UserAgentThemeSwitcherData {
      * @return array Configurated templates
      */
     public function getConfiguratedTemplates() {
-	$sql = 'SELECT * FROM '.$this->tablePrefix.UserAgentThemeSwitcherData::BROWSERS_TABLE;
-	$results = $this->connection->get_results($sql);
+		$sql = 'SELECT * FROM '.$this->tablePrefix.UserAgentThemeSwitcherData::BROWSERS_TABLE;
+		$results = $this->connection->get_results($sql);
 
-	return $results;
+		return $results;
     }//getConfiguratedTemplates
 
 
@@ -188,7 +204,7 @@ class UserAgentThemeSwitcherData {
      * @param BrowserUA $browser Browser to add at the list
      */
     public function addBrowser(BrowserUA $browser) {
-	$this->browsers[] = $browser;
+		$this->browsers[] = $browser;
     }//addBrowser
 
 
@@ -198,9 +214,9 @@ class UserAgentThemeSwitcherData {
      * @param string $theme theme code
      */
     public function addRule($code, $theme) {
-	$sql = 'INSERT INTO '.$this->tablePrefix.UserAgentThemeSwitcherData::BROWSERS_TABLE.' (code, theme) VALUES("'.$code.'", "'.$theme.'")';
-	$this->connection->get_results($sql);
-	$this->generateBrowsers();
+		$sql = 'INSERT INTO '.$this->tablePrefix.UserAgentThemeSwitcherData::BROWSERS_TABLE.' (code, theme) VALUES("'.$code.'", "'.$theme.'")';
+		$this->connection->get_results($sql);
+		$this->generateBrowsers();
     }//addTemplateToBrowser
 
 
@@ -208,8 +224,8 @@ class UserAgentThemeSwitcherData {
      * Delete all debug unsoported user agents
      */
     public function truncateDebugUserAgents() {
-	$sql = 'TRUNCATE TABLE '.$this->tablePrefix.UserAgentThemeSwitcherData::USERAGENTS_TABLE;
-	$this->connection->get_results($sql);
+		$sql = 'TRUNCATE TABLE '.$this->tablePrefix.UserAgentThemeSwitcherData::USERAGENTS_TABLE;
+		$this->connection->get_results($sql);
     }//truncateDebugUserAgents
 
     
@@ -218,9 +234,9 @@ class UserAgentThemeSwitcherData {
      * @param string $rule Rule to delete
      */
     public function deleteRule($rule) {
-	$sql = 'DELETE FROM '.$this->tablePrefix.UserAgentThemeSwitcherData::BROWSERS_TABLE.' WHERE code = "'.$rule.'"';
-	$this->connection->get_results($sql);
-	$this->generateBrowsers();
+		$sql = 'DELETE FROM '.$this->tablePrefix.UserAgentThemeSwitcherData::BROWSERS_TABLE.' WHERE code = "'.$rule.'"';
+		$this->connection->get_results($sql);
+		$this->generateBrowsers();
     }//deleteRule
 
 
@@ -229,13 +245,13 @@ class UserAgentThemeSwitcherData {
      * @param string $useragent Useragent to add
      */
     public function addDebugUserAgent($useragent) {
-	$sql = 'SELECT id FROM '.$this->tablePrefix.UserAgentThemeSwitcherData::USERAGENTS_TABLE.' where useragent = "'.$useragent.'"';
-	$exists = $this->connection->get_results($sql);
+		$sql = 'SELECT id FROM '.$this->tablePrefix.UserAgentThemeSwitcherData::USERAGENTS_TABLE.' where useragent = "'.$useragent.'"';
+		$exists = $this->connection->get_results($sql);
 
-	if($exists == null) {
-	    $sql = 'INSERT INTO '.$this->tablePrefix.UserAgentThemeSwitcherData::USERAGENTS_TABLE.' (useragent) VALUES ("'.$useragent.'")';
-	    $this->connection->get_results($sql);
-	}
+		if($exists == null) {
+			$sql = 'INSERT INTO '.$this->tablePrefix.UserAgentThemeSwitcherData::USERAGENTS_TABLE.' (useragent) VALUES ("'.$useragent.'")';
+			$this->connection->get_results($sql);
+		}
     }//addDebugUserAgent
 
 
@@ -244,10 +260,10 @@ class UserAgentThemeSwitcherData {
      * @return array Unsporoted useragents
      */
     public function getDebugUserAgents() {
-	$sql = 'SELECT * FROM '.$this->tablePrefix.UserAgentThemeSwitcherData::USERAGENTS_TABLE;
-	$results = $this->connection->get_results($sql);
+		$sql = 'SELECT * FROM '.$this->tablePrefix.UserAgentThemeSwitcherData::USERAGENTS_TABLE;
+		$results = $this->connection->get_results($sql);
 
-	return $results;
+		return $results;
     }//getDebugUserAgents
 
 
@@ -256,8 +272,8 @@ class UserAgentThemeSwitcherData {
      * @param int $id Id of the useragent
      */
     public function deleteUserAgent($id) {
-	$sql = 'DELETE FROM '.$this->tablePrefix.UserAgentThemeSwitcherData::USERAGENTS_TABLE.' WHERE id = "'.$id.'"';
-	$this->connection->get_results($sql);
+		$sql = 'DELETE FROM '.$this->tablePrefix.UserAgentThemeSwitcherData::USERAGENTS_TABLE.' WHERE id = "'.$id.'"';
+		$this->connection->get_results($sql);
     }//deleteUserAgent
 
 
@@ -267,26 +283,33 @@ class UserAgentThemeSwitcherData {
     private function generateBrowsers() {
 		$this->browsers = array();
 
-		$this->addBrowser(new BrowserUA('chrome', 'Google Chrome', null, 'Mozilla\/5.0 \(.*\) AppleWebKit\/.* \(KHTML, like Gecko\) Chrome\/.* Safari\/.*', 'webkit'));
-		$this->addBrowser(new BrowserUA('safaridesktop', 'Safari', null, 'Mozilla\/5\.0 \(.*; .*\) AppleWebKit\/.* \(KHTML, like Gecko\) Version\/[\d\.]+ Safari\/.*', 'webkit'));
-		$this->addBrowser(new BrowserUA('firefox', 'Firefox', null, 'Mozilla\/5\.0 \(.*\) Gecko\/.* Firefox\/.*', 'gecko'));
-		$this->addBrowser(new BrowserUA('safarimobile', 'Safari Mobile', null, 'Mozilla\/5.0 \(.*\) AppleWebKit\/.* \(KHTML, like Gecko\)( Version\/.*){0,1} Mobile[\/A-Z0-9]{0,}( Safari\/.*){0,1}', 'webkit,mobile'));
-		$this->addBrowser(new BrowserUA('ie6', 'Internet Explorer 6', null, 'Mozilla\/4\.0 \(compatible; MSIE 6\.0;.*\).*', 'ie'));
-		$this->addBrowser(new BrowserUA('ie7', 'Internet Explorer 7', null, 'Mozilla\/4\.0 \(compatible; MSIE 7\.0;.*\).*', 'ie'));
-		$this->addBrowser(new BrowserUA('ie8', 'Internet Explorer 8', null, 'Mozilla\/4\.0 \(compatible; MSIE 8\.0;.*\).*', 'ie'));
-		$this->addBrowser(new BrowserUA('ie9', 'Internet Explorer 9', null, 'Mozilla\/5\.0 \(compatible; MSIE 9\.0;.*\).*', 'ie'));
-		$this->addBrowser(new BrowserUA('operamini', 'Opera Mini', null, 'Opera\/.* \(.*Opera Mini\/.*\).*', 'opera,mobile'));
-		$this->addBrowser(new BrowserUA('camino', 'Camino', null, 'Mozilla\/5.0 \(.*\) Gecko\/[\d]+ Camino\/[\d\.]+ \(like Firefox\/[\d\.]+\)', 'gecko'));
-		$this->addBrowser(new BrowserUA('operadesktop', 'Opera', null, 'Opera\/[\d\.]+( ){0,1}\(.*\).*', 'opera'));
-		$this->addBrowser(new BrowserUA('iceweasel', 'IceWeasel', null, 'Mozilla\/5.0 \(.*\) Gecko\/[\d]+ Iceweasel\/[\d\.]+ \(Debian-.*\).*', 'gecko'));
-		
-		$this->addBrowser(new BrowserUA('ipad', 'iPad', null, 'Mozilla\/5.0 \(iPad; .*\).*', 'tablet'));
-		$this->addBrowser(new BrowserUA('kindle', 'Amazon Kindle', null, 'Mozilla\/5\.0 \(.*\) AppleWebKit\/.* \(KHTML, like Gecko(.*) Version\/[\d\.]+ Kindle\/.*', 'tablet'));
-		$this->addBrowser(new BrowserUA('wordpressweb', 'Wordpress Web', null, 'WordPress\/(.*\)$', 'spider'));
-		$this->addBrowser(new BrowserUA('wordpressandroid', 'Wordpress Android', null, 'wp-android\/(.*\)$', 'spider'));
 		$this->addBrowser(new BrowserUA('googlebot', 'GoogleBot', null, '^Mozilla\/5\.0 \(compatible; Googlebot\/.\..; \+http:\/\/www\.google\.com\/bot\.html\)$', 'google'));
+		$this->addBrowser(new BrowserUA('ie6', 'Internet Explorer 6', null, '^Mozilla\/4\.0 \(compatible; MSIE 6\.0;.*\).*$', 'ie'));
+		$this->addBrowser(new BrowserUA('ie7', 'Internet Explorer 7', null, '^Mozilla\/4\.0 \(compatible; MSIE 7\.0;.*\).*$', 'ie'));
+		$this->addBrowser(new BrowserUA('ie8', 'Internet Explorer 8', null, '^Mozilla\/4\.0 \(compatible; MSIE 8\.0;.*\).*$', 'ie'));
+		$this->addBrowser(new BrowserUA('ie9', 'Internet Explorer 9', null, '^Mozilla\/5\.0 \(compatible; MSIE 9\.0;.*\).*$', 'ie'));
+		$this->addBrowser(new BrowserUA('chrome', 'Google Chrome', null, '^Mozilla\/5.0 \(.*\) AppleWebKit\/.* \(KHTML, like Gecko\) Chrome\/.* Safari\/.*$', 'webkit'));
+		$this->addBrowser(new BrowserUA('safaridesktop', 'Safari', null, '^Mozilla\/5\.0 \(.*; .*\) AppleWebKit\/.* \(KHTML, like Gecko\) Version\/[\d\.]+ Safari\/.*$', 'webkit'));
+		$this->addBrowser(new BrowserUA('firefox', 'Firefox', null, '^Mozilla\/5\.0 \(.*\) Gecko\/.* Firefox\/.*$', 'gecko'));
+		$this->addBrowser(new BrowserUA('operadesktop', 'Opera', null, '^Opera\/[\d\.]+( ){0,1}\(.*\).*$', 'opera'));
+		$this->addBrowser(new BrowserUA('safarimobile', 'Safari Mobile', null, '^Mozilla\/5.0 \(.*\) AppleWebKit\/.* \(KHTML, like Gecko\)( Version\/.*){0,1} Mobile[\/A-Z0-9]{0,}( Safari\/.*){0,1}$', 'webkit,mobile'));
+		$this->addBrowser(new BrowserUA('operamini', 'Opera Mini', null, '^Opera\/.* \(.*Opera Mini\/.*\).*$', 'opera,mobile'));
+		$this->addBrowser(new BrowserUA('camino', 'Camino', null, '^Mozilla\/5.0 \(.*\) Gecko\/[\d]+ Camino\/[\d\.]+ \(like Firefox\/[\d\.]+\)$', 'gecko'));
+		
+		$this->addBrowser(new BrowserUA('iceweasel', 'IceWeasel', null, '^Mozilla\/5.0 \(.*\) Gecko\/[\d]+ Iceweasel\/[\d\.]+ \(Debian-.*\).*$', 'gecko'));
+		$this->addBrowser(new BrowserUA('rockmelt', 'RockMelt', null, '^Mozilla\/5.0 \(Macintosh; .*\) AppleWebKit\/534\.24 \(KHTML, like Gecko\) RockMelt\/.* Chrome\/.* Safari\/.*$', 'webkit'));
+		
+		$this->addBrowser(new BrowserUA('ipad', 'iPad', null, '^Mozilla\/5.0 \(iPad; .*\).*$', 'tablet'));
+		$this->addBrowser(new BrowserUA('kindle', 'Amazon Kindle', null, '^Mozilla\/5\.0 \(.*\) AppleWebKit\/.* \(KHTML, like Gecko(.*) Version\/[\d\.]+ Kindle\/.*$', 'tablet'));
+		
 		$this->addBrowser(new BrowserUA('googlebotmobile', 'GoogleBot Mobile', null, '\(compatible; Googlebot-Mobile\/.\..; \+http:\/\/www\.google.com\/bot.html\)$', 'google,mobile'));
-
+		
+		$this->addBrowser(new BrowserUA('wordpressandroid', 'Wordpress Android', null, '^wp-android\/(.*\)$', 'spider'));
+		$this->addBrowser(new BrowserUA('wordpressweb', 'Wordpress Web', null, '^WordPress\/.*$', 'spider'));
+		$this->addBrowser(new BrowserUA('java', 'Java', null, '^Java\/.*$', 'spider'));
+		$this->addBrowser(new BrowserUA('bitacoras', 'Bitacoras', null, '^Bitacoras.com\/2\.0 \(http:\/\/bitacoras\.com\)$', 'spider'));
+		
+		
 		$configuratedTemplates = $this->getConfiguratedTemplates();
 		$countConfiguredBrowsers = count($configuratedTemplates);
 		$countBrowsers = count($this->browsers);

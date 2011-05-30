@@ -5,27 +5,18 @@
 		<Tags>
 			<Tag>webkit</Tag>
 		</Tags>
-		<UserAgents>
-			<UserAgent></UserAgent>
-		</UserAgents>
 	</Browser><Browser code="safaridesktop">
 		<Name>Safari</Name>
 		<Pattern>Mozilla\/5\.0 \(.*; .*\) AppleWebKit\/.* \(KHTML, like Gecko\) Version\/[\d\.]+ Safari\/.*</Pattern>
 		<Tags>
 			<Tag>webkit</Tag>
 		</Tags>
-		<UserAgents>
-			<UserAgent></UserAgent>
-		</UserAgents>
 	</Browser><Browser code="firefox">
 		<Name>Firefox</Name>
 		<Pattern>Mozilla\/5\.0 \(.*\) Gecko\/.* Firefox\/.*</Pattern>
 		<Tags>
 			<Tag>gecko</Tag>
 		</Tags>
-		<UserAgents>
-			<UserAgent></UserAgent>
-		</UserAgents>
 	</Browser><Browser code="safarimobile">
 		<Name>Safari Mobile</Name>
 		<Pattern>Mozilla\/5.0 \(.*\) AppleWebKit\/.* \(KHTML, like Gecko\)( Version\/.*){0,1} Mobile[\/A-Z0-9]{0,}( Safari\/.*){0,1}</Pattern>
@@ -33,18 +24,12 @@
 			<Tag>webkit</Tag>
 			<Tag>mobile</Tag>
 		</Tags>
-		<UserAgents>
-			<UserAgent></UserAgent>
-		</UserAgents>
 	</Browser><Browser code="ie6">
 		<Name>Internet Explorer 6</Name>
 		<Pattern>Mozilla\/4\.0 \(compatible; MSIE 6\.0;.*\).*</Pattern>
 		<Tags>
 			<Tag>ie</Tag>
 		</Tags>
-		<UserAgents>
-			<UserAgent></UserAgent>
-		</UserAgents>
 	</Browser>
 	<Browser code="ie7">
 		<Name>Internet Explorer 7</Name>
@@ -52,9 +37,6 @@
 		<Tags>
 			<Tag>ie</Tag>
 		</Tags>
-		<UserAgents>
-			<UserAgent></UserAgent>
-		</UserAgents>
 	</Browser>
 	<Browser code="ie8">
 		<Name>Internet Explorer 8</Name>
@@ -62,9 +44,6 @@
 		<Tags>
 			<Tag>ie</Tag>
 		</Tags>
-		<UserAgents>
-			<UserAgent></UserAgent>
-		</UserAgents>
 	</Browser>
 	<Browser code="ie9">
 		<Name>Internet Explorer 9</Name>
@@ -72,9 +51,6 @@
 		<Tags>
 			<Tag>ie</Tag>
 		</Tags>
-		<UserAgents>
-			<UserAgent></UserAgent>
-		</UserAgents>
 	</Browser>
 	<Browser code="operamini">
 		<Name>Opera Mini</Name>
@@ -83,9 +59,6 @@
 			<Tag>opera</Tag>
 			<Tag>mobile</Tag>
 		</Tags>
-		<UserAgents>
-			<UserAgent></UserAgent>
-		</UserAgents>
 	</Browser>
 	<Browser code="camino">
 		<Name>Camino</Name>
@@ -93,9 +66,6 @@
 		<Tags>
 			<Tag>gecko</Tag>
 		</Tags>
-		<UserAgents>
-			<UserAgent></UserAgent>
-		</UserAgents>
 	</Browser>
 	<Browser code="operadesktop">
 		<Name>Opera</Name>
@@ -103,9 +73,6 @@
 		<Tags>
 			<Tag>opera</Tag>
 		</Tags>
-		<UserAgents>
-			<UserAgent></UserAgent>
-		</UserAgents>
 	</Browser>
 	<Browser code="iceweasel">
 		<Name>IceWeasel</Name>
@@ -113,9 +80,6 @@
 		<Tags>
 			<Tag>gecko</Tag>
 		</Tags>
-		<UserAgents>
-			<UserAgent></UserAgent>
-		</UserAgents>
 	</Browser>
 	<Browser code="ipad">
 		<Name>iPad</Name>
@@ -123,9 +87,6 @@
 		<Tags>
 			<Tag>tablet</Tag>
 		</Tags>
-		<UserAgents>
-			<UserAgent></UserAgent>
-		</UserAgents>
 	</Browser>
 	<Browser code="kindle">
 		<Name>Amazon Kindle</Name>
@@ -133,18 +94,15 @@
 		<Tags>
 			<Tag>tablet</Tag>
 		</Tags>
-		<UserAgents>
-			<UserAgent></UserAgent>
-		</UserAgents>
 	</Browser>
 	<Browser code="wordpressweb">
 		<Name>Wordpress Web</Name>
-		<Pattern>WordPress\/(.*\)$</Pattern>
+		<Pattern>^WordPress\/.*$</Pattern>
 		<Tags>
 			<Tag>spider</Tag>
 		</Tags>
 		<UserAgents>
-			<UserAgent></UserAgent>
+			<UserAgent>WordPress/3.1.2; http://www.indalcasa.com</UserAgent>
 		</UserAgents>
 	</Browser>
 	<Browser code="wordpressandroid">
@@ -153,9 +111,6 @@
 		<Tags>
 			<Tag>spider</Tag>
 		</Tags>
-		<UserAgents>
-			<UserAgent></UserAgent>
-		</UserAgents>
 	</Browser>
 	<Browser code="googlebot">
 		<Name>GoogleBot</Name>
@@ -174,8 +129,5 @@
 			<Tag>google</Tag>
 			<Tag>mobile</Tag>
 		</Tags>
-		<UserAgents>
-			<UserAgent></UserAgent>
-		</UserAgents>
 	</Browser>
 </Browsers>

@@ -211,7 +211,7 @@ class UserAgentThemeSwitcher {
 		$browsersWithTheme = $this->database->getBrowsersWithTheme();
 		$rules = $this->database->getConfiguratedTemplates();
 		$themes = get_themes();
-		$tags = $this->database->getTags();
+		$tags = $this->database->getWebTags();
 
 		include('template/'.UserAgentThemeSwitcher::PAGE_TEMPLATE.'.php');
     }//processUserAgentTemplate
@@ -345,15 +345,15 @@ class UserAgentThemeSwitcher {
      * @return string Processed param
      */
     private function getParameter($parameterName, $isNull = false) {
-	if(isset($_REQUEST[$parameterName])) {
-	    return $_REQUEST[$parameterName];
-	} else {
-	    if($isNull === true) {
-		return null;
-	    } else {
-		return '';
-	    }
-	}
+		if(isset($_REQUEST[$parameterName])) {
+			return $_REQUEST[$parameterName];
+		} else {
+			if($isNull === true) {
+				return null;
+			} else {
+				return '';
+			}
+		}
     }//getParameter
 }//UserAgentThemeSwitcher
 
