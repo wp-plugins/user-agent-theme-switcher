@@ -36,6 +36,11 @@ Now the cache is not supported but will work so that if it is supported in the f
 
 == Changelog ==
 
+= 2.2 =
+* Added support for Internet Explorer Mobile 7
+* Fixed some browsers errors
+* Change the browsers patterns for have more performance
+
 = 2.1.1 =
 * Fix problem with googlebot useragent
 * Added debug option to test the useragents

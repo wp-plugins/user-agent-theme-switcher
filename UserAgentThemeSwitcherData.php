@@ -171,7 +171,10 @@ class UserAgentThemeSwitcherData {
     }//getTags
 	
 	
-	
+	/**
+     * Return a list of tags for show in web (without spider)
+     * @return array List of tags
+     */
 	public function getWebTags() {
 		$tags = $this->getTags();
 		$webTags = array();
@@ -183,9 +186,8 @@ class UserAgentThemeSwitcherData {
 		}
 		
 		return $webTags;
-	}
+	}//getWebTags
 	
-
 
     /**
      * Return all configurated templates
@@ -285,7 +287,7 @@ class UserAgentThemeSwitcherData {
 
 		$this->addBrowser(new BrowserUA('googlebot', 'GoogleBot', null, '^Mozilla\/5\.0 \(compatible; Googlebot\/.\..; \+http:\/\/www\.google\.com\/bot\.html\)$', 'google'));
 		$this->addBrowser(new BrowserUA('ie6', 'Internet Explorer 6', null, '^Mozilla\/4\.0 \(compatible; MSIE 6\.0;.*\).*$', 'ie'));
-		$this->addBrowser(new BrowserUA('ie7', 'Internet Explorer 7', null, '^Mozilla\/4\.0 \(compatible; MSIE 7\.0;.*\).*$', 'ie'));
+		$this->addBrowser(new BrowserUA('ie7', 'Internet Explorer 7', null, '^Mozilla\/4\.0 \(compatible; MSIE 7\.0; Windows NT.*\).*$', 'ie'));
 		$this->addBrowser(new BrowserUA('ie8', 'Internet Explorer 8', null, '^Mozilla\/4\.0 \(compatible; MSIE 8\.0;.*\).*$', 'ie'));
 		$this->addBrowser(new BrowserUA('ie9', 'Internet Explorer 9', null, '^Mozilla\/5\.0 \(compatible; MSIE 9\.0;.*\).*$', 'ie'));
 		$this->addBrowser(new BrowserUA('chrome', 'Google Chrome', null, '^Mozilla\/5.0 \(.*\) AppleWebKit\/.* \(KHTML, like Gecko\) Chrome\/.* Safari\/.*$', 'webkit'));
@@ -301,6 +303,7 @@ class UserAgentThemeSwitcherData {
 		
 		$this->addBrowser(new BrowserUA('ipad', 'iPad', null, '^Mozilla\/5.0 \(iPad; .*\).*$', 'tablet'));
 		$this->addBrowser(new BrowserUA('kindle', 'Amazon Kindle', null, '^Mozilla\/5\.0 \(.*\) AppleWebKit\/.* \(KHTML, like Gecko(.*) Version\/[\d\.]+ Kindle\/.*$', 'tablet'));
+		$this->addBrowser(new BrowserUA('ie7mobile', 'Internet Explorer Mobile 7', null, '^Mozilla\/4\.0 \(compatible; MSIE 7\.0; Windows Phone OS.*\).*$', 'ie,mobile'));
 		
 		$this->addBrowser(new BrowserUA('googlebotmobile', 'GoogleBot Mobile', null, '\(compatible; Googlebot-Mobile\/.\..; \+http:\/\/www\.google.com\/bot.html\)$', 'google,mobile'));
 		
