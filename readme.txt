@@ -36,6 +36,17 @@ Now the cache is not supported but will work so that if it is supported in the f
 
 == Changelog ==
 
+= 2.3 =
+* Fixed a problem with Wordpress for Android
+* Added support for Internet Explorer 2 (Windows 95)
+* Added support for Internet Explorer 5.0
+* Added support for Internet Explorer 5.5
+* Added support by spider for Wordpress for iphone
+* Added support by spider for Wordpress for ipad
+* Added support by spider for Wordpress for Shockwave Flash
+* Added support by spider for Wordpress for Zend_Http_Client
+* Added support by spider for Wordpress for wget
+
 = 2.2 =
 * Added support for Internet Explorer Mobile 7
 * Fixed some browsers errors

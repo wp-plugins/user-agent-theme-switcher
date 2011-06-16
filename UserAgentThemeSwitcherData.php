@@ -286,6 +286,9 @@ class UserAgentThemeSwitcherData {
 		$this->browsers = array();
 
 		$this->addBrowser(new BrowserUA('googlebot', 'GoogleBot', null, '^Mozilla\/5\.0 \(compatible; Googlebot\/.\..; \+http:\/\/www\.google\.com\/bot\.html\)$', 'google'));
+		$this->addBrowser(new BrowserUA('ie2', 'Internet Explorer 2', null, '^Mozilla\/1\.22 \(compatible; MSIE 2\.0;.*\).*$', 'ie'));
+		$this->addBrowser(new BrowserUA('ie5', 'Internet Explorer 5', null, '^Mozilla\/4\.0 \(compatible; MSIE 5\.0;.*\).*$', 'ie'));
+		$this->addBrowser(new BrowserUA('ie55', 'Internet Explorer 5.5', null, '^Mozilla\/4\.0 \(compatible; MSIE 5\.5;.*\).*$', 'ie'));
 		$this->addBrowser(new BrowserUA('ie6', 'Internet Explorer 6', null, '^Mozilla\/4\.0 \(compatible; MSIE 6\.0;.*\).*$', 'ie'));
 		$this->addBrowser(new BrowserUA('ie7', 'Internet Explorer 7', null, '^Mozilla\/4\.0 \(compatible; MSIE 7\.0; Windows NT.*\).*$', 'ie'));
 		$this->addBrowser(new BrowserUA('ie8', 'Internet Explorer 8', null, '^Mozilla\/4\.0 \(compatible; MSIE 8\.0;.*\).*$', 'ie'));
@@ -307,10 +310,16 @@ class UserAgentThemeSwitcherData {
 		
 		$this->addBrowser(new BrowserUA('googlebotmobile', 'GoogleBot Mobile', null, '\(compatible; Googlebot-Mobile\/.\..; \+http:\/\/www\.google.com\/bot.html\)$', 'google,mobile'));
 		
-		$this->addBrowser(new BrowserUA('wordpressandroid', 'Wordpress Android', null, '^wp-android\/(.*\)$', 'spider'));
+		$this->addBrowser(new BrowserUA('wordpressandroid', 'Wordpress Android', null, '^wp-android\/.*$', 'spider'));
+		$this->addBrowser(new BrowserUA('wordpressiphone', 'Wordpress iPhone', null, '^wp-iphone\/.*$', 'spider'));
+		$this->addBrowser(new BrowserUA('wordpressipad', 'Wordpress iPad', null, '^WordPress .* \(iPad; iPhone OS .*\)$', 'spider'));
 		$this->addBrowser(new BrowserUA('wordpressweb', 'Wordpress Web', null, '^WordPress\/.*$', 'spider'));
+		
 		$this->addBrowser(new BrowserUA('java', 'Java', null, '^Java\/.*$', 'spider'));
 		$this->addBrowser(new BrowserUA('bitacoras', 'Bitacoras', null, '^Bitacoras.com\/2\.0 \(http:\/\/bitacoras\.com\)$', 'spider'));
+		$this->addBrowser(new BrowserUA('flash', 'Flash', null, '^Shockwave Flash$', 'spider'));
+		$this->addBrowser(new BrowserUA('zendcrawler', 'Zend Crawler', null, '^Zend_Http_Client$', 'spider'));
+		$this->addBrowser(new BrowserUA('wget', 'wget', null, '^Wget.*$', 'spider'));
 		
 		
 		$configuratedTemplates = $this->getConfiguratedTemplates();
