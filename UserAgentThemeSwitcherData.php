@@ -320,6 +320,7 @@ class UserAgentThemeSwitcherData {
 		$this->addBrowser(new BrowserUA('flash', 'Flash', null, '^Shockwave Flash$', 'spider'));
 		$this->addBrowser(new BrowserUA('zendcrawler', 'Zend Crawler', null, '^Zend_Http_Client$', 'spider'));
 		$this->addBrowser(new BrowserUA('wget', 'wget', null, '^Wget.*$', 'spider'));
+		$this->addBrowser(new BrowserUA('powermarks', 'Powermarks', null, '^Mozilla\/4\.0 \(compatible; Powermarks/.*$', 'spider'));
 		
 		
 		$configuratedTemplates = $this->getConfiguratedTemplates();

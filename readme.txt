@@ -36,6 +36,9 @@ Now the cache is not supported but will work so that if it is supported in the f
 
 == Changelog ==
 
+= 2.4 =
+* Added support by spider for Powermarks
+
 = 2.3 =
 * Fixed a problem with Wordpress for Android
 * Added support for Internet Explorer 2 (Windows 95)
