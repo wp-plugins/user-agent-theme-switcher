@@ -196,7 +196,7 @@
 	</Browser>
 	<Browser code="applepubsub">
 		<Name>Apple-PubSub</Name>
-		<Pattern>^Apple\-PubSub$</Pattern>
+		<Pattern>^Apple\-PubSub\/.*$</Pattern>
 		<Tags>
 			<Tag>spider</Tag>
 		</Tags>

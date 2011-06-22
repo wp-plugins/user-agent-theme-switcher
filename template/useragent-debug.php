@@ -46,7 +46,11 @@
 		$countUseragents = count($useragents);
 
 		for($i = 0; $i < $countUseragents; $i++) {
-		    echo '<tr>';
+		    echo '<tr';
+			if($i % 2 == 0) {
+				echo ' class="alternate"';
+			}
+			echo '>';
 		    echo '<td>'.$useragents[$i]->useragent.'</td>';
 		    echo '<td><a href="'.$this->blogUrl.'/wp-admin/admin.php?page='.UserAgentThemeSwitcher::PAGE_DEBUG.'&action='.UserAgentThemeSwitcher::ACTION_REPORTUSERAGENT.'&useragent='.$useragents[$i]->useragent.'">report</a></td>';
 		    echo '<td><a href="'.$this->blogUrl.'/wp-admin/admin.php?page='.UserAgentThemeSwitcher::PAGE_DEBUG.'&action='.UserAgentThemeSwitcher::ACTION_DELETEUSERAGENT.'&useragent='.$useragents[$i]->id.'">delete</a></td>';
