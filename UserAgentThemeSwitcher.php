@@ -248,7 +248,7 @@ class UserAgentThemeSwitcher {
     public function pageProcess() {
 		$debugmode = get_option(UserAgentThemeSwitcherData::DEBUG_KEY);
 
-		if($debugmode == 'true' && $this->userAgent == null) {
+		if($debugmode == 'true' && $this->userAgent == null && $_SERVER['HTTP_USER_AGENT'] != '') {
 			$useragent = $_SERVER['HTTP_USER_AGENT'];
 			$this->database->addDebugUserAgent($useragent);
 		}
