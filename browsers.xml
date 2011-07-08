@@ -132,7 +132,7 @@
 	</Browser>
 	<Browser code="ie7mobile">
 		<Name>Internet Explorer Mobile 7</Name>
-		<Pattern>^Mozilla\/4\.0 \(compatible; MSIE 7\.0; Windows Phone OS.*\).*$</Pattern>
+		<Pattern>^.*Mozilla\/4\.0 \(compatible; MSIE 7\.0; Windows Phone OS.*\).*$</Pattern>
 		<Tags>
 			<Tag>ie</Tag>
 			<Tag>mobile</Tag>
@@ -207,5 +207,39 @@
 		<Tags>
 			<Tag>spider</Tag>
 		</Tags>
+		<UserAgents>
+			<UserAgent>ia_archiver (+http://www.alexa.com/site/help/webmasters; crawler@alexa.com)</UserAgent>
+		</UserAgents>
+	</Browser>
+	<Browser code="libperl">
+		<Name>libperl</Name>
+		<Pattern>^libwww-perl\/.*$</Pattern>
+		<Tags>
+			<Tag>spider</Tag>
+		</Tags>
+		<UserAgents>
+			<UserAgent>libwww-perl/5.805</UserAgent>
+		</UserAgents>
+	</Browser>
+	<Browser code="bitly">
+		<Name>bit.ly</Name>
+		<Pattern>^bitlybot$</Pattern>
+		<Tags>
+			<Tag>spider</Tag>
+		</Tags>
+		<UserAgents>
+			<UserAgent>bitlybot</UserAgent>
+		</UserAgents>
+	</Browser>
+	<Browser code="twitter">
+		<Name>Twitter Bot</Name>
+		<Pattern>^Twitterbot\/.*$</Pattern>
+		<Tags>
+			<Tag>spider</Tag>
+		</Tags>
+		<UserAgents>
+			<UserAgent>Twitterbot/1.0</UserAgent>
+			<UserAgent>Twitterbot/0.1</UserAgent>
+		</UserAgents>
 	</Browser>
 </Browsers>
