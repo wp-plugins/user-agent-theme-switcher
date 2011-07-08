@@ -6,6 +6,16 @@
 			<Tag>webkit</Tag>
 		</Tags>
 	</Browser>
+	<Browser code="rockmelt">
+		<Name>RockMelt</Name>
+		<Pattern>Mozilla\/5.0 \(.*\) AppleWebKit\/.* \(KHTML, like Gecko\).* Chrome\/.* Safari\/.*</Pattern>
+		<Tags>
+			<Tag>webkit</Tag>
+		</Tags>
+		<UserAgents>
+			<UserAgent>Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/534.24 (KHTML, like Gecko) RockMelt/0.9.58.423 Chrome/11.0.696.71 Safari/534.24</UserAgent>
+		</UserAgents>
+	</Browser>
 	<Browser code="safaridesktop">
 		<Name>Safari</Name>
 		<Pattern>Mozilla\/5\.0 \(.*; .*\) AppleWebKit\/.* \(KHTML, like Gecko\) Version\/[\d\.]+ Safari\/.*</Pattern>
