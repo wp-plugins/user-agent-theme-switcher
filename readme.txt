@@ -39,6 +39,7 @@ Now the cache is not supported but will work so that if it is supported in the f
 = 2.4 =
 * Added support by spider for Powermarks
 * Added support by spider for Apple-PubSub RSS Reader
+* Added support by spider for Alexa Crawler
 * Update debug template to show alternative colors in table rows
 * Delete debuged useragent when the useragent is a empty string
 

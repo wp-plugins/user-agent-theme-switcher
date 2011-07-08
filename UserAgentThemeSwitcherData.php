@@ -322,6 +322,7 @@ class UserAgentThemeSwitcherData {
 		$this->addBrowser(new BrowserUA('wget', 'wget', null, '^Wget.*$', 'spider'));
 		$this->addBrowser(new BrowserUA('powermarks', 'Powermarks', null, '^Mozilla\/4\.0 \(compatible; Powermarks/.*$', 'spider'));
 		$this->addBrowser(new BrowserUA('applepubsub', 'Apple-PubSub', null, '^Apple\-PubSub\/.*$', 'spider'));
+		$this->addBrowser(new BrowserUA('alexa', '^ia_archiver \(\+http:\/\/www\.alexa\.com\/site\/help\/webmasters; crawler@alexa\.com\)$', null, '^Apple\-PubSub\/.*$', 'spider'));
 		
 		
 		$configuratedTemplates = $this->getConfiguratedTemplates();

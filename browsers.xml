@@ -201,4 +201,11 @@
 			<Tag>spider</Tag>
 		</Tags>
 	</Browser>
+	<Browser code="alexa">
+		<Name>Alexa</Name>
+		<Pattern>^ia_archiver \(\+http:\/\/www\.alexa\.com\/site\/help\/webmasters; crawler@alexa\.com\)$</Pattern>
+		<Tags>
+			<Tag>spider</Tag>
+		</Tags>
+	</Browser>
 </Browsers>
