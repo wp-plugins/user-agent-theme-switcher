@@ -5,26 +5,30 @@
 		<Tags>
 			<Tag>webkit</Tag>
 		</Tags>
-	</Browser><Browser code="safaridesktop">
+	</Browser>
+	<Browser code="safaridesktop">
 		<Name>Safari</Name>
 		<Pattern>Mozilla\/5\.0 \(.*; .*\) AppleWebKit\/.* \(KHTML, like Gecko\) Version\/[\d\.]+ Safari\/.*</Pattern>
 		<Tags>
 			<Tag>webkit</Tag>
 		</Tags>
-	</Browser><Browser code="firefox">
+	</Browser>
+	<Browser code="firefox">
 		<Name>Firefox</Name>
 		<Pattern>Mozilla\/5\.0 \(.*\) Gecko\/.* Firefox\/.*</Pattern>
 		<Tags>
 			<Tag>gecko</Tag>
 		</Tags>
-	</Browser><Browser code="safarimobile">
+	</Browser>
+	<Browser code="safarimobile">
 		<Name>Safari Mobile</Name>
 		<Pattern>Mozilla\/5.0 \(.*\) AppleWebKit\/.* \(KHTML, like Gecko\)( Version\/.*){0,1} Mobile[\/A-Z0-9]{0,}( Safari\/.*){0,1}</Pattern>
 		<Tags>
 			<Tag>webkit</Tag>
 			<Tag>mobile</Tag>
 		</Tags>
-	</Browser><Browser code="ie6">
+	</Browser>
+	<Browser code="ie6">
 		<Name>Internet Explorer 6</Name>
 		<Pattern>Mozilla\/4\.0 \(compatible; MSIE 6\.0;.*\).*</Pattern>
 		<Tags>
