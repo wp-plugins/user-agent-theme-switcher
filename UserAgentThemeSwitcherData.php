@@ -293,7 +293,7 @@ class UserAgentThemeSwitcherData {
 		$this->addBrowser(new BrowserUA('ie7', 'Internet Explorer 7', null, '^Mozilla\/4\.0 \(compatible; MSIE 7\.0; Windows NT.*\).*$', 'ie'));
 		$this->addBrowser(new BrowserUA('ie8', 'Internet Explorer 8', null, '^Mozilla\/4\.0 \(compatible; MSIE 8\.0;.*\).*$', 'ie'));
 		$this->addBrowser(new BrowserUA('ie9', 'Internet Explorer 9', null, '^Mozilla\/5\.0 \(compatible; MSIE 9\.0;.*\).*$', 'ie'));
-		$this->addBrowser(new BrowserUA('chrome', 'Google Chrome', null, '^Mozilla\/5.0 \(.*\) AppleWebKit\/.* \(KHTML, like Gecko\) Chrome\/.* Safari\/.*$', 'webkit'));
+		$this->addBrowser(new BrowserUA('chrome', 'Google Chrome', null, '^Mozilla\/5.0 \(.*\) AppleWebKit\/.* \(KHTML, like Gecko\).* Chrome\/.* Safari\/.*$', 'webkit'));
 		$this->addBrowser(new BrowserUA('safaridesktop', 'Safari', null, '^Mozilla\/5\.0 \(.*; .*\) AppleWebKit\/.* \(KHTML, like Gecko\) Version\/[\d\.]+ Safari\/.*$', 'webkit'));
 		$this->addBrowser(new BrowserUA('firefox', 'Firefox', null, '^Mozilla\/5\.0 \(.*\) Gecko\/.* Firefox\/.*$', 'gecko'));
 		$this->addBrowser(new BrowserUA('operadesktop', 'Opera', null, '^Opera\/[\d\.]+( ){0,1}\(.*\).*$', 'opera'));

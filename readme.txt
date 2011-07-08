@@ -45,6 +45,7 @@ Now the cache is not supported but will work so that if it is supported in the f
 * Added support by spider for twitter bot
 * Update debug template to show alternative colors in table rows
 * Fixed useragent pattern for ie7 mobile
+* Fixed useragent pattern for chrome in Chromium for Linux
 * Delete debuged useragent when the useragent is a empty string
 
 = 2.3 =

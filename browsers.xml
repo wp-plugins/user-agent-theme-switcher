@@ -1,7 +1,7 @@
 <Browsers>
 	<Browser code="chrome">
 		<Name>Google Chrome</Name>
-		<Pattern>Mozilla\/5.0 \(.*\) AppleWebKit\/.* \(KHTML, like Gecko\) Chrome\/.* Safari\/.*</Pattern>
+		<Pattern>Mozilla\/5.0 \(.*\) AppleWebKit\/.* \(KHTML, like Gecko\).* Chrome\/.* Safari\/.*</Pattern>
 		<Tags>
 			<Tag>webkit</Tag>
 		</Tags>
