@@ -307,6 +307,7 @@ class UserAgentThemeSwitcherData {
 		$this->addBrowser(new BrowserUA('ipad', 'iPad', null, '^Mozilla\/5.0 \(iPad; .*\).*$', 'tablet'));
 		$this->addBrowser(new BrowserUA('kindle', 'Amazon Kindle', null, '^Mozilla\/5\.0 \(.*\) AppleWebKit\/.* \(KHTML, like Gecko(.*) Version\/[\d\.]+ Kindle\/.*$', 'tablet'));
 		$this->addBrowser(new BrowserUA('ie7mobile', 'Internet Explorer Mobile 7', null, '^Mozilla\/4\.0 \(compatible; MSIE 7\.0; Windows Phone OS.*\).*$', 'ie,mobile'));
+		$this->addBrowser(new BrowserUA('firefoxmobile', 'Firefox Mobile', null, '^Mozilla\/5\.0 \(Android.*\) Gecko\/.* Firefox\/.*$', 'gecko,mobile'));
 		
 		$this->addBrowser(new BrowserUA('googlebotmobile', 'GoogleBot Mobile', null, '\(compatible; Googlebot-Mobile\/.\..; \+http:\/\/www\.google.com\/bot.html\)$', 'google,mobile'));
 		
@@ -326,9 +327,8 @@ class UserAgentThemeSwitcherData {
 		$this->addBrowser(new BrowserUA('libperl', 'libperl', null, '^libwww-perl\/.*$', 'spider'));
 		$this->addBrowser(new BrowserUA('bitly', 'bit.ly', null, '^bitlybot$', 'spider'));
 		$this->addBrowser(new BrowserUA('twitter', 'Twitter Bot', null, '^Twitterbot\/.*$', 'spider'));
-		
-		
-		
+		$this->addBrowser(new BrowserUA('slurp', 'Yahoo Slurp', null, '^Mozilla\/5\.0 \(compatible; Yahoo\! Slurp; http:\/\/help\.yahoo\.com\/help\/us\/ysearch\/slurp\)$', 'spider'));
+		$this->addBrowser(new BrowserUA('yahoocachesystem', 'Yahoo Cache System', null, '^YahooCacheSystem$', 'spider'));
 		
 		
 		$configuratedTemplates = $this->getConfiguratedTemplates();

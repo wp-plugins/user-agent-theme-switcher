@@ -256,4 +256,35 @@
 			<UserAgent>Twitterbot/0.1</UserAgent>
 		</UserAgents>
 	</Browser>
+	<Browser code="slurp">
+		<Name>Yahoo Slurp</Name>
+		<Pattern>^Mozilla\/5\.0 \(compatible; Yahoo\! Slurp; http:\/\/help\.yahoo\.com\/help\/us\/ysearch\/slurp\)$</Pattern>
+		<Tags>
+			<Tag>spider</Tag>
+		</Tags>
+		<UserAgents>
+			<UserAgent>Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)</UserAgent>
+		</UserAgents>
+	</Browser>
+	<Browser code="firefoxmobile">
+		<Name>Firefox Mobile</Name>
+		<Pattern>^Mozilla\/5\.0 \(Android.*\) Gecko\/.* Firefox\/.*$</Pattern>
+		<Tags>
+			<Tag>gecko</Tag>
+			<Tag>mobile</Tag>
+		</Tags>
+		<UserAgents>
+			<UserAgent>Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)</UserAgent>
+		</UserAgents>
+	</Browser>
+	<Browser code="yahoocachesystem">
+		<Name>Yahoo Cache System</Name>
+		<Pattern>^YahooCacheSystem$</Pattern>
+		<Tags>
+			<Tag>spider</Tag>
+		</Tags>
+		<UserAgents>
+			<UserAgent>YahooCacheSystem</UserAgent>
+		</UserAgents>
+	</Browser>
 </Browsers>

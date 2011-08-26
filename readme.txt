@@ -36,6 +36,11 @@ Now the cache is not supported but will work so that if it is supported in the f
 
 == Changelog ==
 
+= 2.5 =
+* Added support for firefox mobile. Thanks to "Benoit DELDICQUE" - www.benoit-deldicque.com
+* Added support by spider for Yahoo Slurp
+* Added support by spider for Yahoo Cache System
+
 = 2.4 =
 * Added support by spider for Powermarks
 * Added support by spider for Apple-PubSub RSS Reader
