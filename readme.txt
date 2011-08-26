@@ -36,11 +36,6 @@ Now the cache is not supported but will work so that if it is supported in the f
 
 == Changelog ==
 
-= 2.5 =
-* Added support for firefox mobile. Thanks to "Benoit DELDICQUE" - www.benoit-deldicque.com
-* Added support by spider for Yahoo Slurp
-* Added support by spider for Yahoo Cache System
-
 = 2.4 =
 * Added support by spider for Powermarks
 * Added support by spider for Apple-PubSub RSS Reader
@@ -48,7 +43,10 @@ Now the cache is not supported but will work so that if it is supported in the f
 * Added support by spider for bit.ly bot
 * Added support by spider for libperl
 * Added support by spider for twitter bot
+* Added support by spider for Yahoo Slurp
+* Added support by spider for Yahoo Cache System
 * Added support for RockMelt browser
+* Added support for firefox mobile. Thanks to "Benoit DELDICQUE" - www.benoit-deldicque.com
 * Update debug template to show alternative colors in table rows
 * Fixed useragent pattern for ie7 mobile
 * Fixed useragent pattern for chrome in Chromium for Linux
