@@ -287,7 +287,7 @@ class UserAgentThemeSwitcherData {
 
 		$this->addBrowser(new BrowserUA('googlebot', 'GoogleBot', null, '^Mozilla\/5\.0 \(compatible; Googlebot\/.\..; \+http:\/\/www\.google\.com\/bot\.html\)$', 'google'));
 		$this->addBrowser(new BrowserUA('ie2', 'Internet Explorer 2', null, '^Mozilla\/1\.22 \(compatible; MSIE 2\.0;.*\).*$', 'ie'));
-		$this->addBrowser(new BrowserUA('ie5', 'Internet Explorer 5', null, '^Mozilla\/4\.0 \(compatible; MSIE 5\.0;.*\).*$', 'ie'));
+		$this->addBrowser(new BrowserUA('ie5', 'Internet Explorer 5', null, '^Mozilla\/4\.0 \(compatible; MSIE 5\.0.*\).*$', 'ie'));
 		$this->addBrowser(new BrowserUA('ie55', 'Internet Explorer 5.5', null, '^Mozilla\/4\.0 \(compatible; MSIE 5\.5;.*\).*$', 'ie'));
 		$this->addBrowser(new BrowserUA('ie6', 'Internet Explorer 6', null, '^Mozilla\/4\.0 \(compatible; MSIE 6\.0;.*\).*$', 'ie'));
 		$this->addBrowser(new BrowserUA('ie7', 'Internet Explorer 7', null, '^Mozilla\/4\.0 \(compatible; MSIE 7\.0; Windows NT.*\).*$', 'ie'));
@@ -329,6 +329,12 @@ class UserAgentThemeSwitcherData {
 		$this->addBrowser(new BrowserUA('twitter', 'Twitter Bot', null, '^Twitterbot\/.*$', 'spider'));
 		$this->addBrowser(new BrowserUA('slurp', 'Yahoo Slurp', null, '^Mozilla\/5\.0 \(compatible; Yahoo\! Slurp; http:\/\/help\.yahoo\.com\/help\/us\/ysearch\/slurp\)$', 'spider'));
 		$this->addBrowser(new BrowserUA('yahoocachesystem', 'Yahoo Cache System', null, '^YahooCacheSystem$', 'spider'));
+		$this->addBrowser(new BrowserUA('blackberry', 'Blackberry Browser', null, '^BlackBerry.* Profile\/MIDP-.* Configuration\/CLDC-.* VendorID\/.*$', 'mobile'));
+		$this->addBrowser(new BrowserUA('msnbot', 'MSNBot', null, '^msnbot-UDiscovery\/2\.0b \( http:\/\/search\.msn\.com\/msnbot\.htm\)$', 'crawler'));
+		
+		
+		$this->addBrowser(new BrowserUA('facebook', 'Facebook', null, '^facebookexternalhit\/1\.1 \( http:\/\/www\.facebook.com\/externalhit_uatext\.php\)$', 'crawler'));
+		$this->addBrowser(new BrowserUA('moreoverbot', 'Moreoverbot', null, '^Moreoverbot\/5\.1 \( http:\/\/w\.moreover\.com; webmaster@moreover\.com\) Mozilla\/5\.0$', 'crawler'));
 		
 		
 		$configuratedTemplates = $this->getConfiguratedTemplates();

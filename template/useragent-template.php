@@ -3,7 +3,7 @@
     <table class="widefat page fixed" width="100%" cellpadding="3" cellspacing="3">
 	<thead>
 	    <tr>
-		<th class="manage-column" scope="col" width="70">Icon</th>
+		<th class="manage-column" scope="col" width="64">Icon</th>
 		<th class="manage-column" scope="col">Code</th>
 		<th class="manage-column" scope="col">Browser</th>
 		<th class="manage-column" scope="col">Tags</th>
@@ -16,8 +16,8 @@
 
 		for($i = 0; $i < $countBrowersWithTheme; $i++) {
 	    ?>
-		<tr>
-		    <td><img src="<?php echo $this->blogUrl; ?>/wp-content/plugins/user-agent-theme-switcher/icon/<?php echo $browsersWithTheme[$i]->getCode(); ?>.png" width="50" height="50" /></td>
+		<tr <?php if($i % 2 == 0) { echo 'class="alternate"'; } ?>>
+		    <td><img class="widefat" src="<?php echo $this->blogUrl; ?>/wp-content/plugins/user-agent-theme-switcher/icon/<?php echo $browsersWithTheme[$i]->getCode(); ?>.png" width="50" height="50" /></td>
 		    <td style="line-height: 50px;"><strong><?php echo $browsersWithTheme[$i]->getCode(); ?></strong></td>
 		    <td style="line-height: 50px;"><strong><?php echo $browsersWithTheme[$i]->getName(); ?></strong></td>
 		    <td style="line-height: 50px;"><?php echo $browsersWithTheme[$i]->getTagsAsString(); ?></td>
@@ -113,7 +113,7 @@
     <table class="widefat page fixed" width="100%" cellpadding="3" cellspacing="3">
 	<thead>
 	    <tr>
-		<th class="manage-column" scope="col" width="70">Icon</th>
+		<th class="manage-column" scope="col" width="64">Icon</th>
 		<th class="manage-column" scope="col">Code|Tag</th>
 		<th class="manage-column" scope="col">Theme</th>
 		<th class="manage-column" scope="col">Delete</th>
@@ -125,8 +125,8 @@
 
 		for($i = 0; $i < $countRules; $i++) {
 	    ?>
-		<tr>
-		    <td><img src="<?php echo $this->blogUrl; ?>/wp-content/plugins/user-agent-theme-switcher/icon/<?php echo $rules[$i]->code; ?>.png" width="50" height="50" /></td>
+		<tr <?php if($i % 2 == 0) { echo 'class="alternate"'; } ?>>
+		    <td><img class="widefat" src="<?php echo $this->blogUrl; ?>/wp-content/plugins/user-agent-theme-switcher/icon/<?php echo $rules[$i]->code; ?>.png" width="50" height="50" /></td>
 		    <td style="line-height: 50px;"><strong><?php echo $rules[$i]->code; ?></strong></td>
 		    <td style="line-height: 50px;"><strong<?php echo $rules[$i]->theme; ?></strong></td>
 		    <td style="line-height: 50px;">

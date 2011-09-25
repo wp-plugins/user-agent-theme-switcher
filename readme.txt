@@ -36,6 +36,18 @@ Now the cache is not supported but will work so that if it is supported in the f
 
 == Changelog ==
 
+= 2.5 =
+* Added border images for rules image browser
+* Improved visual browsers list
+* Added icon for ie2
+* Added icon for ie5
+* Added icon for ie5.5
+* Added Blackberry Browser with useragent: BlackBerry8520/5.0.0.1036 Profile/MIDP-2.1 Configuration/CLDC-1.1 VendorID/121
+* Fixed ie5 for add ie 5.01 for netbox: Mozilla/4.0 (compatible; MSIE 5.5; Windows 98; Linux 2.4.36.2-tangox) [Netgem; 5.2.37-17; i-Player; netbox; NetgemUK]
+* Added support by spider for msnbot: msnbot-UDiscovery/2.0b ( http://search.msn.com/msnbot.htm)
+* Added support by spider for facebook bot: facebookexternalhit/1.1 ( http://www.facebook.com/externalhit_uatext.php)
+* Added support by spider for moreoverbot: Moreoverbot/5.1 ( http://w.moreover.com; webmaster@moreover.com) Mozilla/5.0
+
 = 2.4 =
 * Added support by spider for Powermarks
 * Added support by spider for Apple-PubSub RSS Reader
