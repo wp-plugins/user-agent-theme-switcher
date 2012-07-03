@@ -4,8 +4,8 @@ Plugin Name: UserAgent theme switcher
 Plugin URI: http://www.indalcasa.com
 Description: This plugins switch theme for any useragent, specialy for iphone, chrome mobile, opera mobile, etc. or in a groups of browser same "mobile" or IE to add this template at all browser of this category
 Author: Juan Benavides Romero
-Author URI: http://www.indalcasa.com
-Version: 2.5.0
+Author URI: http://www.altairstudios.es
+Version: 2.6.0
 */
 
 
@@ -96,7 +96,7 @@ class UserAgentThemeSwitcher {
     /**
      * Constant action to report a unsoported useragent
      */
-    const ACTION_REPORTUSERAGENT = 'reportuseragent';
+    //const ACTION_REPORTUSERAGENT = 'reportuseragent';
 
 
     /**
@@ -180,8 +180,8 @@ class UserAgentThemeSwitcher {
 				} else {
 					update_option(UserAgentThemeSwitcherData::DEBUG_KEY, "true");
 				}
-			} else if($action == UserAgentThemeSwitcher::ACTION_REPORTUSERAGENT) {
-				mail('juan.benavides.romero@gmail.com', 'Unsoported useragent report', $this->getParameter('useragent'));
+			/*} else if($action == UserAgentThemeSwitcher::ACTION_REPORTUSERAGENT) {
+				mail('juan.benavides.romero@gmail.com', 'Unsoported useragent report', $this->getParameter('useragent'));*/
 			} else if($action == UserAgentThemeSwitcher::ACTION_DELETEUSERAGENT) {
 				$this->database->deleteUserAgent($this->getParameter('useragent'));
 			} else if($action == UserAgentThemeSwitcher::ACTION_TRUNCATEDEBUGUSERAGENT) {

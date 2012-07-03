@@ -37,7 +37,7 @@
 	<thead>
 	    <tr>
 		<th class="manage-column" scope="col">UserAgent</th>
-		<th class="manage-column" scope="col" width="75"></th>
+		<!--<th class="manage-column" scope="col" width="75"></th>-->
 		<th class="manage-column" scope="col" width="75"></th>
 	    </tr>
 	</thead>
@@ -52,7 +52,7 @@
 			}
 			echo '>';
 		    echo '<td>'.$useragents[$i]->useragent.'</td>';
-		    echo '<td><a href="'.$this->blogUrl.'/wp-admin/admin.php?page='.UserAgentThemeSwitcher::PAGE_DEBUG.'&action='.UserAgentThemeSwitcher::ACTION_REPORTUSERAGENT.'&useragent='.$useragents[$i]->useragent.'">report</a></td>';
+		    //echo '<td><a href="'.$this->blogUrl.'/wp-admin/admin.php?page='.UserAgentThemeSwitcher::PAGE_DEBUG.'&action='.UserAgentThemeSwitcher::ACTION_REPORTUSERAGENT.'&useragent='.$useragents[$i]->useragent.'">report</a></td>';
 		    echo '<td><a href="'.$this->blogUrl.'/wp-admin/admin.php?page='.UserAgentThemeSwitcher::PAGE_DEBUG.'&action='.UserAgentThemeSwitcher::ACTION_DELETEUSERAGENT.'&useragent='.$useragents[$i]->id.'">delete</a></td>';
 		    echo '</tr>';
 		}
